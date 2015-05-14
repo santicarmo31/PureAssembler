@@ -1,4 +1,11 @@
 section .data
+
+msg1 db __UTC_TIME__ ,0xA,0xD ; Este el es que coge la hora global 
+len1 equ $ - msg1 ; Este es el que coge la longitud del msg1
+
+msg2 db __TIME__ ,0xA,0xD ; Este el es que coge la hora del computador 
+len2 equ $ - msg2 ; Este es el que coge la longitud del msg2
+
 global meses
 salto_linea db 0x0A
 meses:
@@ -25,6 +32,26 @@ global _start
 
 _start:
 
+_timeZone:
+mov eax, 4
+mov ebx, 1
+mov ecx, msg1
+mov edx, len1
+int 0x80
+
+mov eax, 4
+mov ebx, 1
+mov ecx, msg2
+mov edx, len2
+int 0x80
+
+mov eax, 4
+mov ebx, 1
+mov ecx, msg1
+mov edx, 2
+int 0x80
+
+; aca empieza lo demas
 pop eax
 pop eax
 pop eax
