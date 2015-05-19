@@ -16,10 +16,10 @@ NASM_ARGS=-f $(FORMAT)
 
 all: assembly copy
 
-assembly: cal.o
-	$(LD) $(LD_ARGS) cal.o
+assembly: calendario.o
+	$(LD) $(LD_ARGS) calendario.o
 
-calendar.o: calendario.asm
+calendario.o: calendario.asm
 	$(NASM) $(NASM_ARGS) calendario.asm
 
 copy: 
