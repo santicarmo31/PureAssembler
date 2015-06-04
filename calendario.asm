@@ -4,207 +4,199 @@
     mov ecx, %1
     mov eax, 4
     mov ebx, 1
-    int 80h
+    int 80h 			;Se hace el llamado al sistema (Linux)
 	%endmacro
 
+;En esta seccion se definen las variables constantes que se utilizaran a lo largo de la practica
+;db carga en memoria una serie de bytes y les asigna un valor
 section .data
 
-salto_linea db "",0x0A
-string_uno db "-y",0
-string_dos db "-d",0
-tres db 3
-pInt db 16
-nulo db "Sin argumentos"
-lenNulo equ $ - nulo
-isYear db "Se pasaron parametros por ano"
-lenIsYear equ $ - isYear
-isDate db "Se pasaron parametros por fecha"
-lenIsDate equ $ - isDate
+salto_linea db "",0x0A    ;salto_linea se utiliza para llamar un salto de linea ;0Ah es un LF en ASCII
+string_uno db "-y",0 	  ;string_uno se le asigna -y como parametro para anos
+string_dos db "-d",0 	  ;string_dos se le asigna -d como parametro para dias
+tres db 3  				
+pInt db 16 				  ;pInt es la longitud a la hora de convertir los enteros
+nulo db "Sin argumentos"  ;Se utiliza para imprimir el mensaje cuando solo se le pasa el argumento calendar
+lenNulo equ $-nulo        ;lenNulo es la longitud de la variable nulo
+isYear db "Se pasaron parametros por ano"   ;Se utiliza para imprimir el mensaje cuando se le pasa el argumento calendar -y
+lenIsYear equ $-isYear 					    ;lenIsYear es la longitud de la variable isYear
+isDate db "Se pasaron parametros por fecha" ;Se utiliza para imprimir el mensaje cuando se le pasa el argumento calendar -d
+lenIsDate equ $-isDate 					    ;lenIsDate es la longitud de la variable isDate
 numb dq 2014
 notCol db "Lastimosamente para acceder a nuestro calendario necesitas estar en Colombia"
-lenNotCol equ $ - notCol
-isCol db "Su timeZone es: "
-lenIsCol equ $ - isCol
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;,,,,,
-ln:	db "",0xa
-	lenLn:	equ $-ln		; "$" means "here"
-							; len is a value, not an address
-	date db __DATE__,0ax, 0xD
-	lenDate: equ $-date
+lenNotCol equ $-notCol 						;lenNotCol es la longitud de la variable notCol
+isCol db "Su timeZone es: "					;Se utiliza para imprimir el mensaje del timeZone donde estamos (Colombia)
+lenIsCol equ $-isCol 						;lenIsCol es la longitud de la variable isCol
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-	nParams: db "",0xa
-	dParam: db "-d",0
-	lenD: equ $-dParam
-	yParam: db "-y",0
-	lenY: equ $-yParam
+	ln:	db "",0xa
+	lenLn:	equ $-ln		   	;"$" means "here" ;len es un valor, no una direccion
+	date db __DATE__,0ax, 0xD  	;date es la variable que captura la fecha
+	lenDate: equ $-date 	   	;lenDate es la longitud de la variable date
+
+	nParams: db "",0xa  	   	;nParams es el numero de parametros
+	dParam: db "-d",0 			;dParam es el parametro para la fecha (-d)
+	lenD: equ $-dParam 			;lenD es la longitud del parametro -d
+	yParam: db "-y",0 			;yParam es el parametro para el ano (-y)
+	lenY: equ $-yParam 			;lenY es la longitud del parametro -y
 
 	array: times 373 db 20
 	lenArray: equ $-array
-	tArr: db 0,3,2,5,0,3,5,1,4,6,2,4
-	header: db "D    L    M    W    J    V    S", 0xa
-	lenHeader: equ $-header
-	spaceNull: db "     ", 0
-	lenSpaceN: equ $-spaceNull
-	spaceSimple: db " ",0
-	lenSpaceS: equ $-spaceSimple
-	spaceDouble: db "  ",0
-	lenSpaceD: equ $-spaceDouble
-	spaceTriple: db "   ",0
-	lenSpaceT: equ $-spaceTriple
-	spaceQuad: db "    ",0
-	lenSpaceQ: equ $-spaceQuad
-	fChar: db "F ", 0
+	tArr: db 0,3,2,5,0,3,5,1,4,6,2,4  					;Tamano del arreglo
+	cabecera: db "D    L    M    W    J    V    S", 0xa ;Dias de la semana por sus iniciales
+	lenCabecera: equ $-cabecera
+	espacioNulo: db "     ", 0 							;Espacio nulo para la impresion del calendar
+	lenEspacioN: equ $-espacioNulo
+	espacioSimple: db " ",0  							;Espacio simple para la impresion del calendar
+	lenEspacioS: equ $-espacioSimple
+	espacioDoble: db "  ",0 							;Espacio doble para la impresion del calendar
+	lenEspacioD: equ $-espacioDoble
+	espacioTriple: db "   ",0 							;Espacio triple para la impresion del calendar
+	lenEspacioT: equ $-espacioTriple
+	espacioCuad: db "    ",0 							;Espacio cuadru para la impresion del calendar
+	lenEspacioC: equ $-espacioCuad
+	fChar: db "F ", 0 									;Caracter F para indicar si es Festivo o no
 	lenFChar: equ $-fChar
 
-	january: db "Enero",0xa
-	lenJanuary: equ $-january
-	february: db "Febrero",0xa
-	lenFebruary: equ $-february
-	march: db "Marzo",0xa
-	lenMarch: equ $-march
-	april: db "Abril",0xa
-	lenApril: equ $-april
-	may: db "Mayo",0xa
-	lenMay: equ $-may
-	june: db "Junio",0xa
-	lenJune: equ $-june
-	july: db "Julio",0xa
-	lenJuly: equ $-july
-	august: db "Agosto",0xa
-	lenAugust: equ $-august
-	september: db "Septiembre",0xa
-	lenSeptember: equ $-september
-	october: db "Octubre",0xa
-	lenOctober: equ $-october
-	november: db "Noviembre",0xa
-	lenNovember: equ $-november
-	december: db "Diciembre",0xa
-	lenDecember: equ $-december	
-
-
+	enero: db "Enero",0xa  								;Declaracion del mes Enero
+	lenEnero: equ $-enero 							
+	febrero: db "Febrero",0xa 							;Declaracion del mes Febrero
+	lenFebrero: equ $-febrero
+	marzo: db "Marzo",0xa 								;Declaracion del mes Marzo
+	lenMarzo: equ $-marzo
+	abril: db "Abril",0xa 								;Declaracion del mes Abril
+	lenAbril: equ $-abril
+	mayo: db "Mayo",0xa 								;Declaracion del mes Mayo
+	lenMayo: equ $-mayo
+	junio: db "Junio",0xa 								;Declaracion del mes Junio
+	lenJunio: equ $-junio
+	julio: db "Julio",0xa 								;Declaracion del mes Julio
+	lenJulio: equ $-julio
+	agosto: db "Agosto",0xa 							;Declaracion del mes Agosto
+	lenAgosto: equ $-agosto
+	septiembre: db "Septiembre",0xa 					;Declaracion del mes Septiembre
+	lenSeptiembre: equ $-septiembre
+	octubre: db "Octubre",0xa 							;Declaracion del mes Octubre
+	lenOctubre: equ $-octubre
+	noviembre: db "Noviembre",0xa 						;Declaracion del mes Noviembre
+	lenNoviembre: equ $-noviembre
+	diciembre: db "Diciembre",0xa 						;Declaracion del mes Diciembre
+	lenDiciembre: equ $-diciembre	
 
 ;Se guarda las variables que no se inicializan
 section .bss 
-arg resb 4
-timeZone: resb 8 ; Se reserva una variable con el tamaño de un entero para guardar la zona de colombia = 300
-timeStamp: resb 4; se reserva una variable para almacenar el time date = segundos desde el 1 de enero de 1970
-digit: resb 16
-years: resb 4   ; Reservo un entero para el año
-days: resb 4    ; Reservo un entro para los dias
-months: resb 4  ; Reservo un entero para los meses
-daysLeftMonth: resb 4
-isB: resb 4
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-div4 resd 1
-	div100 resd 1
-	div400 resd 1
-	y resd 1
-	m resd 1
-	d resd 1
-	dayofweek resd 1
-	i resd 1
-	j resd 1
-	a resd 1
-	b resd 1
-	c resd 1
-	e resd 1
-	f resd 1
-	g resd 1
-	h resd 1
-	k resd 1
-	l resd 1
-	n resd 1
-	monthOfEaster resd 1
-	dayOfEaster resd 1
-	last resd 1
-	index resd 1
-	res resd 1
-	lenType resd 1
-	lenParam resd 1
-	year resd 1
-	month resd 1
-	day resd 1
-	lenPrint resd 1
-	type: resb 32
-	param: resb 32
-        countNil: resd 1
 
+arg resb 4
+timeZone: resb 8  ;Se reserva una variable con el tamaño de un entero para guardar el timeZone de colombia = 300
+timeStamp: resb 4 ;Se reserva una variable para almacenar el time date = segundos desde el 1 de enero de 1970
+digit: resb 16 
+years: resb 4     		;Reservo un entero para el ano
+days: resb 4      		;Reservo un entero para los dias
+months: resb 4    		;Reservo un entero para los meses
+daysLeftMonth: resb 4  	;Reservo un entero para los dias que faltan
+isB: resb 4 			;Reservo un entero para los Bisiestos
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+div4 resd 1 			;resd para reservar palabras dobles
+div100 resd 1
+div400 resd 1
+y resd 1 				
+m resd 1 				
+d resd 1 				
+dayofweek resd 1 		;dia de la semana
+i resd 1
+j resd 1
+a resd 1
+b resd 1
+c resd 1
+e resd 1
+f resd 1
+g resd 1
+h resd 1
+k resd 1
+l resd 1
+n resd 1
+monthOfEaster resd 1 	;mes de Pascua
+dayOfEaster resd 1 		;dia de Pascua
+last resd 1
+index resd 1
+res resd 1
+lenType resd 1
+lenParam resd 1
+year resd 1 			;ano
+month resd 1 			;mes
+day resd 1 				;dia
+lenPrint resd 1 		
+type: resb 32 			;tipo
+param: resb 32 			;parametro
+countNil: resd 1
+
+;Se define la funcion macro para llamar a la salida del sistema
 	%macro syscall_exit 0
-		mov eax, 01h    ; exit()
-		xor ebx, ebx    ; exit code ---- 0=normal
-		int 80h					; interrupt 80 hex, call kernel
+		mov eax, 01h    ;exit()
+		xor ebx, ebx    ;exit code ---- 0=normal
+		int 80h			;llamada a la interrupccion del sistema 80 hex, call kernel
 	%endmacro
 
 
-
-
-
-
-
-
-
-
-
 ;Se utilizara .indicador para saber cuales son indicadores
-;Se utilizara _funcion para saber cuales son las funciones
+;Se utilizara _funcion para saber cuales son funciones
+;Seccion de codigo
 section .text
-global _start
 
+global _start
 _start:
 
 pop eax
-mov [nParams], eax       ;Se saca del stack el valor de argc (#de argumentos)
-cmp eax,1                ;Se compara si el numero de argumentos es > 1
-je .nulo                 ;Si viene sin argumentos sal al indicador .nulo
-mov eax, [esp + 4]       ;Muevo el Stack pointer para acceder al primer argumento
-mov ebx, string_uno
+mov [nParams], eax       ;Se saca del stack el valor de argc (# de argumentos)
+cmp eax, 1               ;Se compara si el numero de argumentos es > 1
+je .nulo                 ;Si viene sin argumentos salta al indicador .nulo
+mov eax, [esp+4]       	 ;Muevo el Stack pointer para acceder al primer argumento
+mov ebx, string_uno 	 
 mov ecx, 3
 mov edx, 3
-call _stringCompare      ;Llamo a la funcio para saber si el argumento que me pasaron es -y
-cmp eax,0                ;Si la funcion retorna 0 entonces salta al indicador para imprimir-
-je .isYear               ;-que se pasaron argumentos por año 
-mov eax, [esp + 4]       ;Vuelvo a setear los parametros de la funcion _stringcompare para-
-mov ebx, string_dos      ;-comparar el mismo primer argumento si es -d
+call _stringCompare      ;Llamo a la funcion para saber si el argumento que me pasaron es -y
+cmp eax, 0               ;Si la funcion retorna 0 entonces salta al indicador para imprimir lo que se paso por el argumento ano
+je .isYear               ;Si viene con argumento -y salta al indicador .isYear
+mov eax, [esp+4]       	 ;Vuelvo a setear los parametros de la funcion para comparar si el parametro es -d
+mov ebx, string_dos      
 mov ecx, 3
 mov edx, 3
 call _stringCompare
-cmp eax,0                ;Si da 0 quiere decir que se paso el argumento por -d y deberia imprimir-
-je .isDate
+cmp eax, 0               ;Si da 0 quiere decir que se paso el argumento por -d y deberia imprimir que se le paso el argumento por fecha
+je .isDate 				 ;Si viene con argumento -d salta al indicador .isDate
+jmp .halt 				 ;Salta a halt cuando termina
 
-
-               ;-que se le paso el argumento por date
-jmp .halt
-
-;.nulo termina el programa pues no se le pasaron argumentos
+;.nulo imprime el ano actual, ya que no se le pasan parametros (unicamente calendar)
 .nulo:
-  mov eax, 4
-  mov ebx, 1
-  mov ecx, nulo
-  mov edx, lenNulo
-  int 0x80
-  call _saltoLinea
-  mov eax, 78             ;Se llama la instruccion del sistema que trae una estructura con la zona horaria getTimeOfday
-  mov ebx,timeStamp            ; Se mueve a ebx el timeval de la estructura del llamado al sistema
-  mov ecx,timeZone
-  int 0x80
-  mov eax, [timeZone]       ;Muevo a eax el valor de el timezone
-  cmp eax, 300
-  jne .isNotCol  
-  mov edx,0
-  mov eax, [timeStamp]
+mov eax, 4
+mov ebx, 1
+mov ecx, nulo
+mov edx, lenNulo
+int 0x80 				  ;Se hace el llamado al sistema (Linux)
+call _saltoLinea 		  ;Llamo a la funcion para realizar un salto de linea
+mov eax, 78               ;Se llama la instruccion del sistema que trae una estructura con la zona horaria getTimeOfday
+mov ebx, timeStamp        ;Se mueve a ebx el timeval de la estructura del llamado al sistema
+mov ecx, timeZone
+int 0x80 				  ;Se hace el llamado al sistema (Linux)
+mov eax, [timeZone]       ;Muevo a eax el valor del timeZone
+cmp eax, 300 			  ;Comparo el valor del timeZone con 300 (timeZone de Colombia)
+jne .isNotCol   		  ;Salto al indicador .isNotCOl si no estoy en Colombia
+mov edx, 0
+mov eax, [timeStamp]
+call _saltoLinea 		  ;Llamo a la funcion para realizar un salto de linea
 
-  mov ecx, 31556926   ; La cantidad de segundos que tiene un año
-  div ecx
-  add eax, 1970
-  mov [years], eax      
-  mov [year], eax
-  call CalcCalendar
-  call holidaysOfYear
-  call printCalendar
-  jmp .halt
+mov ecx, 31556926   	  ;Esta es la cantidad de segundos que tiene un año
+div ecx 				  ;Divido para obtener la cantidad de anos desde 1970
+add eax, 1970 		  ;Suma la cantidad de la division anterior con 1970 para obtener el ano actual
+mov [years], eax      
+mov [year], eax
+call CalcCalendar 	  
+call holidaysOfYear 	  ;Llamo a la funcion para los Festivos de ano
+call printCalendar 	  ;Llamo a la funcion para imprimir el calendario
+jmp .halt 			  ;Salta a halt cuando termina
 
 
-;isYear imprimer en pantalla que se le pasaron argumentos por año
+;isYear imprime en pantalla el ano que se le paso como argumentos 
 .isYear: 
    ;pop eax
    ;pop eax
@@ -221,37 +213,36 @@ jmp .halt
    ;call CalcCalendar
    ;call holidaysOfYear
    ;call printCalendar
-    ; jmp .halt
+   ;jmp .halt
    print_Some isYear, lenIsYear
    call _saltoLinea             
    jmp .isCol
 
-;isDate imprime en pnatalla que se le pasaron argumentos por fecha
+;isDate imprime en pantalla la fecha que se le paso como argumentos
 .isDate:
    print_Some isDate, lenIsDate
-   call _saltoLinea               ;Llama la funcion del salto de linea
+   call _saltoLinea           ;Llama la funcion del salto de linea
    jmp .isCol
 
 ;Determina si la zona horaria es de colombia
 .isCol:
-
-   call _getTime             ;Llamo a la funcion para setear el timezone de mi laptop
-   mov eax, [timeZone]       ;Muevo a eax el valor de el timezone
-   cmp eax, 300                
-   jne .isNotCol                  ;Me interrumpe la ejecucion del programa pues no estoy en colombia
+   call _getTime              ;Llamo a la funcion para setear el timezone de mi laptop
+   mov eax, [timeZone]        ;Muevo a eax el valor del timeZone
+   cmp eax, 300               ;Comparo el valor del timeZone con 300 (timeZone de Colombia)
+   jne .isNotCol              ;Me interrumpe la ejecucion del programa si no estoy en colombia
    mov eax, [timeZone] 
    mov edi, digit
-   call _intToString              ;Si estoy en colombia imprimo el entero
-   print_Some isCol, lenIsCol     ;Imprimo el mensaje de su timezone es: 
-   print_Some digit, pInt         ;imprimo el entero de la zona horari
-   call _saltoLinea               
-   jmp .continue
+   call _intToString          ;Si estoy en colombia imprimo el entero
+   print_Some isCol, lenIsCol ;Imprimo el mensaje de: "Su timezone es: " 
+   print_Some digit, pInt     ;Imprimo el entero de la zona horaria
+   call _saltoLinea           ;Llamo a la funcion para realizar un salto de linea
+   jmp .continue 			  ;Si ando en Colombia salto al indicador .continue para continuar
 
-
+;continue continua con la ejecucion del calendario, pues estamos en Colombia
 .continue:
-   mov edx,0
+   mov edx, 0
    mov eax, [timeStamp]
-   mov ecx, 31556926   ; La cantidad de segundos que tiene un año
+   mov ecx, 31556926   		  ;La cantidad de segundos que tiene un año
    div ecx
    add eax, 1970
    mov [years], eax
@@ -264,34 +255,30 @@ jmp .halt
    print_Some ebx, ecx
    print_Some ln, lenLn
    mov edx, [param]
-   call _convStringToInt
+   call _convStringToInt 	 ;Llamo a la funcion para convertir el String que capture como param en entero
    mov [year], eax
    call CalcCalendar
-   call holidaysOfYear
-   call printCalendar
+   call holidaysOfYear 		 ;Llamo a la funcion para los Festivos de ano
+   call printCalendar 		 ;Llamo a la funcion para imprimir el calendario
+   ;mov edi, digit
+   ;call _intToString
+   ;print_Some digit, pInt
+   mov eax, edx
+   xor edx, edx
+   mov ecx, 86400
+   div ecx
+   mov [days], eax    		;EN EAX ESTAN LOS DIAS QUE PASARON DESDE EL 01 DE ENERO DEL ANO ACTUAL
+   mov esi, 0    			;Contador de mes
+   mov edi, eax  			;Contador para los dias
 
-;mov edi, digit
-;call _intToString
-;print_Some digit, pInt
-mov eax, edx
-xor edx,edx
-mov ecx,86400
-div ecx
-mov [days], eax
-
- ; EN EAX ESTAN LOS DIAS PASARON DESDE EL 01 ENER ANO ACTUAL
-
-mov esi, 0 ; Contador de mes
-mov edi, eax ; Contador para los dias
-
+;dateLoop es un indicador que hace un ciclo para recorrer las fechas
 .dateLoop:
-
 mov edx, 0
 mov eax, esi
 mov ecx, 7
 div ecx
 
-; Modulo 2 del resultado del mes
+;Modulo 2 del resultado del mes
 mov eax, edx
 mov edx, 0
 mov ecx, 2
@@ -300,42 +287,43 @@ mov eax, edx
 
 cmp esi, 1 
 je .isFeb
-cmp eax, 0 ; compara si es par tiene 31 dias el mes
-je .isPar ; Si es par se le resta 31 dias
+cmp eax, 0   ;Compara si es par tiene 31 dias el mes
+je .isPar    ;Si es par se le resta 31 dias
    
 mov dword[daysLeftMonth], 30
-sub edi, 30 ; Se le restan 30 dias al contador para los dias
+sub edi, 30  ;Se le restan 30 dias al contador para los dias
 jmp .isParEnd
 
+;esPar si el mes es de 31 dias
 .isPar:
 mov dword[daysLeftMonth], 31
 sub edi, 31
 jmp .isParEnd
 
-; FebNormal le resta 28 dias al contador de dias
+;FebNormal le resta 28 dias al contador de dias
 .isFeb:
-   mov eax, [years]
-   call _isB
-   mov eax, [isB]
-   cmp eax, 1
-   je .isFebB ; Salta a febrero bisiesto
+mov eax, [years]
+call _isB
+mov eax, [isB]
+cmp eax, 1
+je .isFebB   ;Salta a Febrero bisiesto
 
-   mov dword[daysLeftMonth], 28
-   sub edi, 28
-   jmp .isParEnd
+mov dword[daysLeftMonth], 28
+sub edi, 28
+jmp .isParEnd
 
-
-.isFebB: ; Como es bisiesto se le resta 29 dias.
-   mov dword[daysLeftMonth], 29
-   sub edi, 29
+;FebB le resta 29 dias al contador de dias, ya que es bisiesto
+.isFebB: 
+mov dword[daysLeftMonth], 29
+sub edi, 29
 
 .isParEnd:
-add esi,1 ; Incremento el contador de meses
+add esi,1    ;Incremento el contador de meses
 
-   ; Comparamos si la fecha es negativa salimos del ciclo
+;Comparamos si la fecha es negativa, salimos del ciclo
 cmp edi, 0
-jge .dateLoop ; Si el contandor de dias que falta es mayor que 0 vuelve a hacer el loop
-add edi, [daysLeftMonth] ; Sumo dias que se restaron al ultimo mes
+jge .dateLoop ;Si el contandor de dias que falta es mayor que 0 vuelve a hacer el loop
+add edi, [daysLeftMonth] ;Sumo dias que se restaron al ultimo mes
 mov [days], edi
 mov [months], esi
 
@@ -349,25 +337,23 @@ mov [months], esi
 ;call _intToString
 ;print_Some digit, pInt
 ;call _saltoLinea
-jmp .halt
+jmp .halt    ;Salta a halt cuando termina
 
-;no esta en colombia
+;Nos dice si no esta en Colombia
 .isNotCol:
-  mov eax, 4
-  mov ebx, 1
-  mov ecx, nulo
-  mov edx, lenNulo
-  int 0x80
-  jmp .halt
+mov eax, 4
+mov ebx, 1
+mov ecx, notCol
+mov edx, lenNotCol
+int 0x80    ;Se hace el llamado al sistema (Linux)
+call _saltoLinea
+jmp .halt   ;Salta a halt cuando termina
 
-
-;Termina la ejecucion.
+;halt para terminar la ejecucion.
 .halt:
- mov eax, 1
- mov ebx, 0
- int 0x80
-
-
+mov eax, 1
+mov ebx, 0
+int 0x80
 
 ;_miFuncion:
 ;   _reiniciarContador:
@@ -378,64 +364,52 @@ jmp .halt
 ;     cmp byte[eax + ecx],0
 ;     jne _buscarLongitud
      
-
- 
-; Compara dos Strings haciendo uso de los llamados ESI:EDI del 
-; procesador que permiten la operacion con strings en memoria
-; (cmpsb) o (cmosw para comparar de a 2 bytes)
+;Compara dos Strings haciendo uso de los llamados ESI:EDI del 
+;procesador que permiten la operacion con strings en memoria
+;(cmpsb) o (cmosw para comparar de a 2 bytes)
 ;
-; Parametros:
-;   EAX => char * [Direccion SRC]
+;Parametros:
+;	EAX => char * [Direccion SRC]
 ;   EBX => char * [Direccion DES]
 ;   ECX => int [Length SRC]
 ;   EDX => int [Length DES]
 ;
-; Retorno:
+;Retorno:
 ;   EAX => 0 si son iguales; 1 si no son iguales
 ;
 _stringCompare:
-    ; mueve a esi el str1 [eax]
-    mov esi, eax
-    ; mueve a edi el str2 [ebx]
-    mov edi, ebx
-
-    ; se limpia el flag de direccion de strings
-    cld
-    
-    ; el flag de ZERO se setea si ambos str son iguales o se limpia si no 
-    repe cmpsb ; va comparando bytes en memoria, hasta el caracter NULL
-    
+    mov esi, eax 	;Mueve a esi el str1 [eax]
+    mov edi, ebx 	;Mueve a edi el str2 [ebx]
+    cld 			;Se limpia el flag de direccion de strings
+    ;El flag de ZERO se setea si ambos str son iguales o si no se limpia
+    repe cmpsb  	;Va comparando bytes en memoria, hasta el caracter NULL
     jecxz .stringCompareDifferent
-
-    mov eax, 1 ; movemos 1 a eax, es decir son iguales
-    jmp .stringCompareExit ; retorna el resulatado [EAX]
+    mov eax, 1 		;Movemos 1 a eax, es decir No son iguales
+    jmp .stringCompareExit ;Retorna el resulatado [EAX]
 
 .stringCompareDifferent:
-    mov eax, 0 ; movemos 0 a eax, es decir no son iguales
+    mov eax, 0  	;Movemos 0 a eax, es decir son iguales
 
 .stringCompareExit:
     ret
 
-
-;Realiza un salto de linea
+;Funcion para realizar un salto de linea
 _saltoLinea:
-
-    mov eax,4
-    mov ebx,1
-    mov ecx,salto_linea
-    mov edx,1
+    mov eax, 4
+    mov ebx, 1
+    mov ecx, salto_linea
+    mov edx, 1
     int 0x80
 ret
 
-;Obtiene el timeZone
+;Funcion para obtener el timeZone
 _getTime:
     mov eax, 78             ;Se llama la instruccion del sistema que trae una estructura con la zona horaria getTimeOfday
-    mov ebx,timeStamp            ; Se mueve a ebx el timeval de la estructura del llamado al sistema
-    mov ecx,timeZone
+    mov ebx, timeStamp      ;Se mueve a ebx el timeval de la estructura del llamado al sistema
+    mov ecx, timeZone
     int 0x80
 
 ;Imprime un entero
-
 _intToString:
     push  edx
     push  ecx
@@ -448,40 +422,37 @@ _intToString:
     ;push 0x0a  ;End of line \n
 
  .pushDigits:
-    xor   edx, edx        ; zero-extend eax
-    div   ecx             ; divide by 10; now edx = next digit
-    add   edx, 30h        ; decimal value + 30h => ascii digit
-    push  edx             ; push the whole dword, cause that's how x86 rolls
-    test  eax, eax        ; leading zeros suck
-    jnz   .pushDigits
+    xor edx, edx        ;Zero-extend eax
+    div ecx             ;Divide by 10; now edx = next digit
+    add edx, 30h        ;Decimal value + 30h => ascii digit
+    push edx            ;Push the whole dword, cause that's how x86 rolls
+    test eax, eax       ;Leading zeros suck
+    jnz .pushDigits
 
  .popDigits:
-    pop   eax
-    stosb                 ; don't write the whole dword, just the low byte
-    cmp   esp, ebp        ; if esp==ebp, we've popped all the digits
-    jne   .popDigits
-
-    xor   eax, eax        ; add trailing nul
+    pop eax
+    stosb               ;Don't write the whole dword, just the low byte
+    cmp esp, ebp        ;If esp == ebp, we've popped all the digits
+    jne .popDigits
+    xor eax, eax        ;Add trailing nul
     stosb
-
-    mov   eax, edi
-    pop   ebp
-    pop   edi
-    pop   ecx
-    pop   edx
-    sub   eax, edi        ; return number of bytes written
+    mov eax, edi
+    pop ebp
+    pop edi
+    pop ecx
+    pop edx
+    sub eax, edi        ;Return number of bytes written
     ret
-
 
 write_digit:
     push eax
     push ebx
 	push ecx
 	push edx
-	mov eax, 4                  ; system call ;4 = sys_write
-	mov ebx, 1                  ; file descriptor 1 = stdout
-	mov ecx, digit              ; store *address* of digit into ecx
-	mov edx, 16                 ; byte size of 16
+	mov eax, 4       	;System call, 4 = sys_write
+	mov ebx, 1         	;File descriptor 1 = stdout
+	mov ecx, digit      ;Store *address* of digit into ecx
+	mov edx, 16         ;Byte size of 16
 	int 80h
 	pop edx
 	pop ecx
@@ -489,46 +460,39 @@ write_digit:
 	pop eax
 	ret
 
+;Funcion que convierte un String en Entero
 _convStringToInt:
-	xor eax, eax ; zero a "result so far"
+	xor eax, eax 		  ;Zero a "result so far"
 	.top:
-	movzx ecx, byte [edx] ; get a character
-	inc edx ; ready for next one
-	cmp ecx, '0' ; valid?
+	movzx ecx, byte [edx] ;Get a character
+	inc edx 			  ;Ready for next one
+	cmp ecx, '0' 		  ;Valid?
 	jb .done
 	cmp ecx, '9'
 	ja .done
-	sub ecx, '0' ; "convert" character to number
-	imul eax, 10 ; multiply "result so far" by ten
-	add eax, ecx ; add in current digit
-	jmp .top ; until done
+	sub ecx, '0' 		  ;"convert" character to number
+	imul eax, 10 		  ;Multiply "result so far" by ten
+	add eax, ecx  		  ;Add in current digit
+	jmp .top              ;Until done
 	.done:
 	cmp ecx, 0
 	ret
 
-
 strcmp:
 	cmp ecx, edx
 	jnz .lengths
-	; mueve a esi el str1 [eax]
-	mov esi, eax
-	; mueve a edi el str2 [ebx]
-	mov edi, ebx
-
-	; se limpia el flag de direccion de strings
-	cld
-
-	; el flag de ZERO se setea si ambos str son iguales o se limpia si no
-	repe cmpsb ; va comparando bytes en memoria, hasta el caracter NULL
-
+	mov esi, eax     	  ;Mueve a esi el str1 [eax]
+	mov edi, ebx 		  ;Mueve a edi el str2 [ebx]
+	cld  				  ;Se limpia el flag de direccion de strings
+	; el flag de ZERO se setea si ambos str son iguales o si no se limpia
+	repe cmpsb       	  ;Va comparando bytes en memoria, hasta el caracter NULL
 	jecxz .strcmpSame
-
 	.lengths:
-	mov eax, 1 ; movemos 1 a eax, es decir no son iguales
-	jmp .strcmpExit ; retorna el resulatado [EAX]
+	mov eax, 1  		  ;Movemos 1 a eax, es decir No son iguales
+	jmp .strcmpExit  	  ;Retorna el resulatado [EAX]
 
 	.strcmpSame:
-		mov eax, 0 ; movemos 0 a eax, es decir son iguales
+	mov eax, 0  		  ;Movemos 0 a eax, es decir son iguales
 
 	.strcmpExit:
 	  ret
@@ -538,15 +502,15 @@ Length:
 	sub	al, al
 	not	ecx
 	cld
-	repne	scasb
+	repne scasb
 	not	ecx
-	;dec	ecx
+	;dec ecx
 	ret
 
 dow:
-	;EAX IS STORED Y
-	;EBX IS STORED M
-	;ECX IS STORED D
+	;EAX ESTA GUARDADO Y
+	;EBX ESTA GUARDADO M
+	;ECX ESTA GUARDADO D
 	mov [y], eax
 	mov [m], ebx
 	mov [d], ecx
@@ -583,25 +547,22 @@ dow:
 	add eax, ecx
 	movzx ecx, byte [tArr+ebx]
 	add eax, ecx
-	;mov eax, [tArr+ebx*4] ;Times position because a doubleword has 4 bytes
+	;mov eax, [tArr+ebx*4]      ;Times position because a doubleword has 4 bytes
 	;movzx eax, byte [tArr+ebx] ;Mov a byte from the array to a register
 	xor edx, edx
 	mov ebx, 7
 	div ebx
 	mov eax, edx
-	;Return in EDX or EAX
+	;Returna en EDX o EAX
 	ret
-
-
 
 ; Calcula si el año es bisiesto
 _isB:
-
-mov edx,0
-mov eax,[years]
+mov edx, 0
+mov eax, [years]
 mov ecx, 4
 div ecx
-cmp edx, 0 ;Comparo si el año es divisible por 4
+cmp edx, 0  	;Comparo si el año es divisible por 4
 je .stepTwo
 jmp .stepFive
 
@@ -610,12 +571,11 @@ mov eax, [years]
 mov edx, 0
 mov ecx, 100
 div ecx
-cmp edx, 0 ; Comparo si es divisible por 100
+cmp edx, 0 		;Comparo si es divisible por 100
 je .stepThree
 jmp .stepFour
 
 .stepThree:
-
 mov eax, [years]
 mov edx, 0
 mov ecx, 400
@@ -626,18 +586,16 @@ jmp .stepFive
 
 ;El año es bisiesto y tiene 366 dias
 .stepFour:
-mov dword[isB], 1 ; 1 si es bisiesto
+mov dword[isB], 1  		;1 Si es bisiesto
 
 .stepFive:
-mov dword[isB], 0 ; 0 Si no es bisiesto
+mov dword[isB], 0  		;0 Si no es bisiesto
 
 ret
 
-
-
 CalcCalendar:
 	;year = []
-  ;year << nil
+  	;year << nil
 	mov eax, 1
 	mov [index], eax
 	mov eax, [year]
@@ -863,15 +821,18 @@ printArray:
 	ret
 
 holidaysOfYear:
-;1 de enero - Año Nuevo
+;Festivos inamovibles
+;1 de Enero - Ano Nuevo
 ;Jueves Santo
 ;Viernes Santo
-;1 de mayo – Día del Trabajo
-;20 de julio – Independencia Nacional 7 de agosto – Batalla de Boyacá
-;8 de diciembre - Inmaculada Concepción 25 de diciembre - Navidad
+;1 de Mayo - Dia del Trabajo
+;20 de Julio - Independencia Nacional 
+;7 de Agosto - Batalla de Boyaca
+;8 de Diciembre - Inmaculada Concepcion 
+;25 de Diciembre - Navidad
 
-; 1 de enero
-mov ebx, 1
+;1 de Enero
+mov ebx, 1       ;1
 movzx eax, byte[array+ebx]
 mov ecx, 10
 add eax, ecx
@@ -880,7 +841,7 @@ mov al, [res]
 mov [array+ebx], al
 ;y[1] *= -1
 
-;1 de mayo
+;1 de Mayo
 mov ebx, 125     ;4*31+1
 movzx eax, byte[array+ebx]
 mov ecx, 10
@@ -890,7 +851,7 @@ mov al, [res]
 mov [array+ebx], al
 ;y[4*31 + 1] *= -1
 
-;20 de julio
+;20 de Julio
 mov ebx, 206     ;6*31+20
 movzx eax, byte[array+ebx]
 mov ecx, 10
@@ -900,17 +861,7 @@ mov al, [res]
 mov [array+ebx], al
 ;y[6*31 + 20] *= -1
 
-;8 de diciembre
-mov ebx, 349     ;11*31+8
-movzx eax, byte[array+ebx]
-mov ecx, 10
-add eax, ecx
-mov [res], eax
-mov al, [res]
-mov [array+ebx], al
-;y[11*31 + 8] *= -1
-
-;7 de agosto
+;7 de Agosto
 mov ebx, 224     ;7*31+7
 movzx eax, byte[array+ebx]
 mov ecx, 10
@@ -920,7 +871,17 @@ mov al, [res]
 mov [array+ebx], al
 ;y[7*31 + 7] *= -1
 
-;25 de diciembre
+;8 de Diciembre
+mov ebx, 349     ;11*31+8
+movzx eax, byte[array+ebx]
+mov ecx, 10
+add eax, ecx
+mov [res], eax
+mov al, [res]
+mov [array+ebx], al
+;y[11*31 + 8] *= -1
+
+;25 de Diciembre
 mov ebx, 366     ;11*31+25
 movzx eax, byte[array+ebx]
 mov ecx, 10
@@ -930,19 +891,20 @@ mov al, [res]
 mov [array+ebx], al
 ;y[11*31 + 25] *= -1
 
-; 6 de enero - Epifanía del Señor
-; 19 de marzo - Día de San José
-; !!Ascensión del Señor (Sexto domingo después de Pascua)
-; !!Corpus Christi (Octavo domingo después de Pascua)
-; !!Sagrado Corazón de Jesús (Noveno domingo después de Pascua)
-; !!jueves y viernes santo (semana anterior a pascua)
-; 29 de Junio San Pedro y San Pablo
-; 15 de agosto - Asunción de la Virgen!
-; 12 de octubre - Día de la Raza
-; 1 de noviembre - Todos los Santos
-; 11 de noviembre - Independencia de Cartagena.
+;Festivos cobijados por la ley
+;6 de Enero - Epifania del Senor
+;19 de Marzo - Dia de San Jose
+;Ascension del Senor (Sexto Domingo despues de Pascua)
+;Corpus Christi (Octavo Domingo despues de Pascua)
+;Sagrado Corazon de Jesus (Noveno Domingo despues de Pascua)
+;!!jueves y viernes santo (semana anterior a pascua)
+;29 de Junio - San Pedro y San Pablo
+;15 de Agosto - Asuncion de la Virgen
+;12 de Octubre - Dia de la Raza
+;1 de Noviembre - Todos los Santos
+;11 de Noviembre - Independencia de Cartagena
 
-; ;6 de enero
+;;6 de Enero
 mov eax, 8
 movzx ebx, byte[array+6]
 sub eax, ebx
@@ -960,7 +922,7 @@ mov al, [res]
 mov [array+ebx], al
 ;y[((7 - y[6] + 1) % 7) + (6)] *= -1
 
-; ;19 de marzo
+;;19 de Marzo
 mov eax, 8
 movzx ebx, byte[array+81]
 sub eax, ebx
@@ -978,8 +940,7 @@ mov al, [res]
 mov [array+ebx], al
 ;y[((7 - y[2*31 + 19] + 1) % 7) + (2*31 + 19)] *= -1
 
-
-; ;29 de Junio
+;;29 de Junio
 mov eax, 9
 movzx ebx, byte[array+184]
 sub eax, ebx
@@ -997,7 +958,7 @@ mov al, [res]
 mov [array+ebx], al
 ;y[((7 - y[5*31 + 29] + 1) % 7) + (5*31 + 29)] *= -1
 
-; ;15 de agosto
+;;15 de Agosto
 mov eax, 8
 movzx ebx, byte[array+232]
 sub eax, ebx
@@ -1015,7 +976,7 @@ mov al, [res]
 mov [array+ebx], al
 ;y[((7 - y[7*31 + 15] + 1) % 7) + (7*31 + 15)] *= -1
 
-; ;12 de octubre
+;;12 de Octubre
 mov eax, 8
 movzx ebx, byte[array+291]
 sub eax, ebx
@@ -1033,7 +994,7 @@ mov al, [res]
 mov [array+ebx], al
 ;y[((7 - y[9*31 + 12] + 1) % 7) + (9*31 + 12)] *= -1
 
-; ;1 de noviembre
+;;1 de Noviembre
 mov eax, 8
 movzx ebx, byte[array+311]
 sub eax, ebx
@@ -1051,7 +1012,7 @@ mov al, [res]
 mov [array+ebx], al
 ;y[((7 - y[10*31 + 1] + 1) % 7) + (10*31 + 1)] *= -1
 
-; ;11 de noviembre
+;;11 de Noviembre
 mov eax, 8
 movzx ebx, byte[array+321]
 sub eax, ebx
@@ -1069,20 +1030,20 @@ mov al, [res]
 mov [array+ebx], al
 ;y[((7 - y[10*31 + 11] + 1) % 7) + (10*31 + 11)] *= -1
 
-; ;Calculo del domingo de pascua
-;a = anio % 19
+;;Calculo del Domingo de Pascua
+;a = ano % 19
 mov eax, [year]
 mov ebx, 19
 xor edx, edx
 div ebx
 mov [a], edx
-;b = anio / 100
+;b = ano / 100
 mov eax, [year]
 mov ebx, 100
 xor edx, edx
 div ebx
 mov [b], eax
-;c = anio % 100
+;c = ano % 100
 mov eax, [year]
 mov ebx, 100
 xor edx, edx
@@ -1230,65 +1191,63 @@ mov [res], eax
 mov al, [res]
 mov [array+ebx], al
 
-;dia de la ascencion
-	mov eax, [monthOfEaster]
-	dec eax
-	mov ebx, 31
-	mul ebx
-	mov ecx, eax
-	mov eax, [dayOfEaster]
-	add eax, 42
-	add eax, ecx
-	mov [index], eax
-	movzx eax, byte[array+eax]
-	mov ebx, 7
-	sub ebx, eax
-	inc ebx
-	mov eax, ebx
-	mov ecx, 7
-	xor edx, edx
-	div ecx
-	mov ebx, edx
-	add ebx, [index]
-	movzx eax, byte[array+ebx]
-	mov ecx, 10
-	add eax, ecx
-	mov [res], eax
-	mov al, [res]
-	mov [array+ebx], al
+;;Dia de la ascencion
+mov eax, [monthOfEaster]
+dec eax
+mov ebx, 31
+mul ebx
+mov ecx, eax
+mov eax, [dayOfEaster]
+add eax, 42
+add eax, ecx
+mov [index], eax
+movzx eax, byte[array+eax]
+mov ebx, 7
+sub ebx, eax
+inc ebx
+mov eax, ebx
+mov ecx, 7
+xor edx, edx
+div ecx
+mov ebx, edx
+add ebx, [index]
+movzx eax, byte[array+ebx]
+mov ecx, 10
+add eax, ecx
+mov [res], eax
+mov al, [res]
+mov [array+ebx], al
+;y[((7 - y[(monthOfEaster - 1)*31 + dayOfEaster + 42] + 1) % 7) + ((monthOfEaster - 1)*31 + dayOfEaster + 42)] *= -1
 
-	;y[((7 - y[(monthOfEaster - 1)*31 + dayOfEaster + 42] + 1) % 7) + ((monthOfEaster - 1)*31 + dayOfEaster + 42)] *= -1
+;;Corpus Christi
+mov eax, [monthOfEaster]
+dec eax
+mov ebx, 31
+mul ebx
+mov ecx, eax
+mov eax, [dayOfEaster]
+add eax, 63
+add eax, ecx
+mov [index], eax
+movzx eax, byte[array+eax]
+mov ebx, 7
+sub ebx, eax
+inc ebx
+mov eax, ebx
+mov ecx, 7
+xor edx, edx
+div ecx
+mov ebx, edx
+add ebx, [index]
+movzx eax, byte[array+ebx]
+mov ecx, 10
+add eax, ecx
+mov [res], eax
+mov al, [res]
+mov [array+ebx], al
+;y[((7 - y[(monthOfEaster - 1)*31 + dayOfEaster + 63] + 1) % 7) + ((monthOfEaster - 1)*31 + dayOfEaster + 63)] *= -1
 
-	;corpus Christi
-	mov eax, [monthOfEaster]
-	dec eax
-	mov ebx, 31
-	mul ebx
-	mov ecx, eax
-	mov eax, [dayOfEaster]
-	add eax, 63
-	add eax, ecx
-	mov [index], eax
-	movzx eax, byte[array+eax]
-	mov ebx, 7
-	sub ebx, eax
-	inc ebx
-	mov eax, ebx
-	mov ecx, 7
-	xor edx, edx
-	div ecx
-	mov ebx, edx
-	add ebx, [index]
-	movzx eax, byte[array+ebx]
-	mov ecx, 10
-	add eax, ecx
-	mov [res], eax
-	mov al, [res]
-	mov [array+ebx], al
-	;y[((7 - y[(monthOfEaster - 1)*31 + dayOfEaster + 63] + 1) % 7) + ((monthOfEaster - 1)*31 + dayOfEaster + 63)] *= -1
-;;SAgrado corazoncito
-
-;sagrado corazon
+;;Sagrado Corazon
 mov eax, [monthOfEaster]
 dec eax
 mov ebx, 31
@@ -1321,7 +1280,7 @@ ret
 printCalendar:
 	mov eax, 0
 	mov [dayofweek], eax
-;	resetRow
+	;ResetRow
 	mov ebx, 0
 	mov [index], ebx
 	mov ecx, 0
@@ -1334,65 +1293,65 @@ printCalendar:
 	jg .exitForMonths
 	cmp ecx, 1
 	jnz .next1
-	print_Some january, lenJanuary
+	print_Some enero, lenEnero
 	jmp .format
 	.next1:
 	cmp ecx, 2
 	jnz .next2
-	print_Some february, lenFebruary
+	print_Some febrero, lenFebrero
 	jmp .format
 	.next2:
 	cmp ecx, 3
 	jnz .next3
-	print_Some march, lenMarch
+	print_Some marzo, lenMarzo
 	jmp .format
 	.next3:
 	cmp ecx, 4
 	jnz .next4
-	print_Some april, lenApril
+	print_Some abril, lenAbril
 	jmp .format
 	.next4:
 	cmp ecx, 5
 	jnz .next5
-	print_Some may, lenMay
+	print_Some mayo, lenMayo
 	jmp .format
 	.next5:
 	cmp ecx, 6
 	jnz .next6
-	print_Some june, lenJune
+	print_Some junio, lenJunio
 	jmp .format
 	.next6:
 	cmp ecx, 7
 	jnz .next7
-	print_Some july, lenJuly
+	print_Some julio, lenJulio
 	jmp .format
 	.next7:
 	cmp ecx, 8
 	jnz .next8
-	print_Some august, lenAugust
+	print_Some agosto, lenAgosto
 	jmp .format
 	.next8:
 	cmp ecx, 9
 	jnz .next9
-	print_Some september, lenSeptember
+	print_Some septiembre, lenSeptiembre
 	jmp .format
 	.next9:
 	cmp ecx, 10
 	jnz .next10
-	print_Some october, lenOctober
+	print_Some octubre, lenOctubre
 	jmp .format
 	.next10:
 	cmp ecx, 11
 	jnz .next11
-	print_Some november, lenNovember
+	print_Some noviembre, lenNoviembre
 	jmp .format
 	.next11:
 	cmp ecx, 12
 	jnz .forMonths
-	print_Some december, lenDecember
+	print_Some diciembre, lenDiciembre
 
 	.format:
-	print_Some header, lenHeader
+	print_Some cabecera, lenCabecera
 	mov ebx, 1
 	mov [j], ebx
 	.whilej:
@@ -1416,38 +1375,38 @@ printCalendar:
 	div ecx
 	mov eax, edx
 	cmp eax, [dayofweek]
-	jnz .elseNoHoly
+	jnz .elseNoFestivo
 	mov ebx, [res]
 	movzx eax, byte[array+ebx]
 	cmp eax, 0
-	jz .isHoly
+	jz .isFestivo
 	mov ebx, [res]
 	movzx eax, byte[array+ebx]
 	cmp eax, 10
 	jb .isNormal
 
-	.isHoly:
+	.isFestivo:
 	print_Some fChar, lenFChar
 	mov eax, [j]
 	mov [last], eax
 	cmp eax, 10
-	jb .addSpaceHoly
+	jb .addEspacioFestivo
 	mov edi, digit
 	call _intToString
 	call write_digit
-	print_Some spaceSimple, lenSpaceS
+	print_Some espacioSimple, lenEspacioS
 	.contine2:
 	mov ebx, [index]
 	inc ebx
 	mov [index], ebx
 	jmp .continue
 
-	.addSpaceHoly:
+	.addEspacioFestivo:
 	mov eax, [j]
 	mov edi, digit
 	call _intToString
 	call write_digit
-	print_Some spaceDouble, lenSpaceD
+	print_Some espacioDoble, lenEspacioD
 	jmp .contine2
 
 	.isNormal:
@@ -1458,11 +1417,11 @@ printCalendar:
 	mov eax, [j]
 	mov [last], eax
 	cmp eax, 10
-	jb .addSpaceNormal
+	jb .addEspacioNormal
 	mov edi, digit
 	call _intToString
 	call write_digit
-	print_Some spaceTriple, lenSpaceT
+	print_Some espacioTriple, lenEspacioT
 	.continue3:
 	mov ebx, [index]
 	inc ebx
@@ -1478,68 +1437,67 @@ printCalendar:
 	mov ebx, [j]
 	inc ebx
 	mov [j], ebx
-	jmp .newRow
+	jmp .nuevaFila
 
-	.addSpaceNormal:
+	.addEspacioNormal:
 	mov eax, [j]
 	mov edi, digit
 	call _intToString
 	call write_digit
-	print_Some spaceQuad, lenSpaceQ
+	print_Some espacioCuad, lenEspacioC
 	jmp .continue3
 
-	.elseNoHoly:
-		print_Some spaceNull, lenSpaceN
-		mov eax, -1
-		mov [last], eax
-		mov ebx, [index]
-		inc ebx
-		mov [index], ebx
-		mov eax, [dayofweek]
-		inc eax
-		mov ecx, 7
-		xor edx, edx
-		div ecx
-		mov [dayofweek], edx
+	.elseNoFestivo:
+	print_Some espacioNulo, lenEspacioN
+	mov eax, -1
+	mov [last], eax
+	mov ebx, [index]
+	inc ebx
+	mov [index], ebx
+	mov eax, [dayofweek]
+	inc eax
+	mov ecx, 7
+	xor edx, edx
+	div ecx
+	mov [dayofweek], edx
 
-		.newRow:
-		mov eax, [index]
-		cmp eax, 7
-		jz .newLine
-		mov ebx, [last]
-		cmp ebx, 31
-		jz .newLine
-		;row[row.count - 1] == 31
-		jmp .exitElseNull
+	.nuevaFila:
+	mov eax, [index]
+	cmp eax, 7
+	jz .nuevaLinea
+	mov ebx, [last]
+	cmp ebx, 31
+	jz .nuevaLinea
+	;row[row.count - 1] == 31
+	jmp .exitElseNull
 
-		.newLine:
-		print_Some ln, lenLn
-		mov ebx, 0
-		mov [dayofweek], ebx
-		mov [index], ebx
-		jmp .exitElseNull
+	.nuevaLinea:
+	print_Some ln, lenLn
+	mov ebx, 0
+	mov [dayofweek], ebx
+	mov [index], ebx
+	jmp .exitElseNull
 
-		.elseNull:
-		print_Some ln, lenLn
-		mov ebx, 0
-		mov [dayofweek], ebx
-		mov [index], ebx
-		mov ecx, 32
-		mov [j], ecx
+	.elseNull:
+	print_Some ln, lenLn
+	mov ebx, 0
+	mov [dayofweek], ebx
+	mov [index], ebx
+	mov ecx, 32
+	mov [j], ecx
 
-		.exitElseNull:
-		jmp .whilej
+	.exitElseNull:
+	jmp .whilej
 
-		.exitWhilej:
-		print_Some ln, lenLn
-		print_Some ln, lenLn
-		mov ebx, 0
-		mov [index], ebx
+	.exitWhilej:
+	print_Some ln, lenLn
+	print_Some ln, lenLn
+	mov ebx, 0
+	mov [index], ebx
+	jmp .forMonths
 
-		jmp .forMonths
-
-		.exitForMonths:
-		ret
+	.exitForMonths:
+	ret
 
 Error:
 

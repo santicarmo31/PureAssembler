@@ -1,4 +1,4 @@
-EXECUTABLE=test # nombre del ejecutable a generar
+EXECUTABLE=calendar # nombre del ejecutable a generar
 
 ## CONFIG:
 NASM=nasm 	# por defecto en /usr/bin/nasm
