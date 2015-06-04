@@ -187,6 +187,9 @@ jmp .halt
   mov ebx,timeStamp            ; Se mueve a ebx el timeval de la estructura del llamado al sistema
   mov ecx,timeZone
   int 0x80
+  mov eax, [timeZone]       ;Muevo a eax el valor de el timezone
+  cmp eax, 300
+  jne .isNotCol  
   mov edx,0
   mov eax, [timeStamp]
 
