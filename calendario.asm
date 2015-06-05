@@ -18,23 +18,23 @@ tres db 3
 pInt db 16 				  ;pInt es la longitud a la hora de convertir los enteros
 nulo db "Sin argumentos"  ;Se utiliza para imprimir el mensaje cuando solo se le pasa el argumento calendar
 lenNulo equ $-nulo        ;lenNulo es la longitud de la variable nulo
-isYear db "Se pasaron parametros por ano"   ;Se utiliza para imprimir el mensaje cuando se le pasa el argumento calendar -y
-lenIsYear equ $-isYear 					    ;lenIsYear es la longitud de la variable isYear
-isDate db "Se pasaron parametros por fecha" ;Se utiliza para imprimir el mensaje cuando se le pasa el argumento calendar -d
-lenIsDate equ $-isDate 					    ;lenIsDate es la longitud de la variable isDate
+esAno db "Se pasaron parametros por ano"   ;Se utiliza para imprimir el mensaje cuando se le pasa el argumento calendar -y
+lenEsAno equ $-esAno 			;lenEsAno es la longitud de la variable esAno
+esFecha db "Se pasaron parametros por fecha" ;Se utiliza para imprimir el mensaje cuando se le pasa el argumento calendar -d
+lenEsFecha equ $-esFecha 	;lenEsFecha es la longitud de la variable esFecha
 numb dq 2014
-notCol db "Lastimosamente para acceder a nuestro calendario necesitas estar en Colombia"
-lenNotCol equ $-notCol 						;lenNotCol es la longitud de la variable notCol
-isCol db "Su timeZone es: "					;Se utiliza para imprimir el mensaje del timeZone donde estamos (Colombia)
-lenIsCol equ $-isCol 						;lenIsCol es la longitud de la variable isCol
+noCol db "Lastimosamente para acceder a nuestro calendario necesitas estar en Colombia"
+lenNoCol equ $-noCol 						;lenNoCol es la longitud de la variable noCol
+esCol db "Su timeZone es: "			;Se utiliza para imprimir el mensaje del timeZone donde estamos (Colombia)
+lenEsCol equ $-esCol 						;lenEsCol es la longitud de la variable esCol
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 	ln:	db "",0xa
 	lenLn:	equ $-ln		   	;"$" means "here" ;len es un valor, no una direccion
 	date db __DATE__,0ax, 0xD  	;date es la variable que captura la fecha
-	lenDate: equ $-date 	   	;lenDate es la longitud de la variable date
+	lenDate: equ $-date 	   	  ;lenDate es la longitud de la variable date
 
-	nParams: db "",0xa  	   	;nParams es el numero de parametros
+	nParams: db "",0xa  	  ;nParams es el numero de parametros
 	dParam: db "-d",0 			;dParam es el parametro para la fecha (-d)
 	lenD: equ $-dParam 			;lenD es la longitud del parametro -d
 	yParam: db "-y",0 			;yParam es el parametro para el ano (-y)
@@ -42,45 +42,45 @@ lenIsCol equ $-isCol 						;lenIsCol es la longitud de la variable isCol
 
 	array: times 373 db 20
 	lenArray: equ $-array
-	tArr: db 0,3,2,5,0,3,5,1,4,6,2,4  					;Tamano del arreglo
-	cabecera: db "D    L    M    W    J    V    S", 0xa ;Dias de la semana por sus iniciales
+	tArr: db 0,3,2,5,0,3,5,1,4,6,2,4  					        ;Tamano del arreglo
+	cabecera: db "D    L    M    M    J    V    S", 0xa ;Dias de la semana por sus iniciales
 	lenCabecera: equ $-cabecera
-	espacioNulo: db "     ", 0 							;Espacio nulo para la impresion del calendar
+	espacioNulo: db "     ", 0 							;Espacio nulo para la impresion del calendario
 	lenEspacioN: equ $-espacioNulo
-	espacioSimple: db " ",0  							;Espacio simple para la impresion del calendar
+	espacioSimple: db " ", 0  							;Espacio simple para la impresion del calendario
 	lenEspacioS: equ $-espacioSimple
-	espacioDoble: db "  ",0 							;Espacio doble para la impresion del calendar
+	espacioDoble: db "  ", 0 							  ;Espacio doble para la impresion del calendario
 	lenEspacioD: equ $-espacioDoble
-	espacioTriple: db "   ",0 							;Espacio triple para la impresion del calendar
+	espacioTriple: db "   ", 0 							;Espacio triple para la impresion del calendario
 	lenEspacioT: equ $-espacioTriple
-	espacioCuad: db "    ",0 							;Espacio cuadru para la impresion del calendar
+	espacioCuad: db "    ", 0 							;Espacio cuadru para la impresion del calendario
 	lenEspacioC: equ $-espacioCuad
-	fChar: db "F ", 0 									;Caracter F para indicar si es Festivo o no
-	lenFChar: equ $-fChar
+	caracterF: db "F ", 0 									;Caracter F para indicar si es Festivo o no
+	lenCaracterF: equ $-caracterF
 
-	enero: db "Enero",0xa  								;Declaracion del mes Enero
+	enero: db "Enero",0xa  								  ;Declaracion del mes Enero
 	lenEnero: equ $-enero 							
 	febrero: db "Febrero",0xa 							;Declaracion del mes Febrero
 	lenFebrero: equ $-febrero
-	marzo: db "Marzo",0xa 								;Declaracion del mes Marzo
+	marzo: db "Marzo",0xa 								  ;Declaracion del mes Marzo
 	lenMarzo: equ $-marzo
-	abril: db "Abril",0xa 								;Declaracion del mes Abril
+	abril: db "Abril",0xa 								  ;Declaracion del mes Abril
 	lenAbril: equ $-abril
-	mayo: db "Mayo",0xa 								;Declaracion del mes Mayo
+	mayo: db "Mayo",0xa 								    ;Declaracion del mes Mayo
 	lenMayo: equ $-mayo
-	junio: db "Junio",0xa 								;Declaracion del mes Junio
+	junio: db "Junio",0xa 								  ;Declaracion del mes Junio
 	lenJunio: equ $-junio
-	julio: db "Julio",0xa 								;Declaracion del mes Julio
+	julio: db "Julio",0xa 								  ;Declaracion del mes Julio
 	lenJulio: equ $-julio
-	agosto: db "Agosto",0xa 							;Declaracion del mes Agosto
+	agosto: db "Agosto",0xa 							  ;Declaracion del mes Agosto
 	lenAgosto: equ $-agosto
-	septiembre: db "Septiembre",0xa 					;Declaracion del mes Septiembre
+	septiembre: db "Septiembre",0xa 			  ;Declaracion del mes Septiembre
 	lenSeptiembre: equ $-septiembre
 	octubre: db "Octubre",0xa 							;Declaracion del mes Octubre
 	lenOctubre: equ $-octubre
-	noviembre: db "Noviembre",0xa 						;Declaracion del mes Noviembre
+	noviembre: db "Noviembre",0xa 					;Declaracion del mes Noviembre
 	lenNoviembre: equ $-noviembre
-	diciembre: db "Diciembre",0xa 						;Declaracion del mes Diciembre
+	diciembre: db "Diciembre",0xa 					;Declaracion del mes Diciembre
 	lenDiciembre: equ $-diciembre	
 
 ;Se guarda las variables que no se inicializan
@@ -89,12 +89,12 @@ section .bss
 arg resb 4
 timeZone: resb 8  ;Se reserva una variable con el tamaño de un entero para guardar el timeZone de colombia = 300
 timeStamp: resb 4 ;Se reserva una variable para almacenar el time date = segundos desde el 1 de enero de 1970
-digit: resb 16 
-years: resb 4     		;Reservo un entero para el ano
-days: resb 4      		;Reservo un entero para los dias
-months: resb 4    		;Reservo un entero para los meses
-daysLeftMonth: resb 4  	;Reservo un entero para los dias que faltan
-isB: resb 4 			;Reservo un entero para los Bisiestos
+digito: resb 16 
+anos: resb 4     		    ;Reservo un entero para el ano
+meses: resb 4           ;Reservo un entero para los meses
+dias: resb 4      		  ;Reservo un entero para los dias
+diasFaltanMes: resb 4  	;Reservo un entero para los dias que faltan
+esB: resb 4 			      ;Reservo un entero para los Bisiestos
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 div4 resd 1 			;resd para reservar palabras dobles
 div100 resd 1
@@ -102,7 +102,7 @@ div400 resd 1
 y resd 1 				
 m resd 1 				
 d resd 1 				
-dayofweek resd 1 		;dia de la semana
+diaDeLaSemana resd 1 	;dia de la semana
 i resd 1
 j resd 1
 a resd 1
@@ -115,16 +115,16 @@ h resd 1
 k resd 1
 l resd 1
 n resd 1
-monthOfEaster resd 1 	;mes de Pascua
-dayOfEaster resd 1 		;dia de Pascua
-last resd 1
-index resd 1
+mesDePascua resd 1 	;mes de Pascua
+diaDePascua resd 1 	;dia de Pascua
+ultimo resd 1
+indice resd 1
 res resd 1
 lenType resd 1
 lenParam resd 1
-year resd 1 			;ano
-month resd 1 			;mes
-day resd 1 				;dia
+ano resd 1 			    ;ano
+mes resd 1 			    ;mes
+dia resd 1 				  ;dia
 lenPrint resd 1 		
 type: resb 32 			;tipo
 param: resb 32 			;parametro
@@ -150,21 +150,21 @@ pop eax
 mov [nParams], eax       ;Se saca del stack el valor de argc (# de argumentos)
 cmp eax, 1               ;Se compara si el numero de argumentos es > 1
 je .nulo                 ;Si viene sin argumentos salta al indicador .nulo
-mov eax, [esp+4]       	 ;Muevo el Stack pointer para acceder al primer argumento
+mov eax, [esp + 4]       ;Muevo el Stack pointer para acceder al primer argumento
 mov ebx, string_uno 	 
 mov ecx, 3
 mov edx, 3
 call _stringCompare      ;Llamo a la funcion para saber si el argumento que me pasaron es -y
 cmp eax, 0               ;Si la funcion retorna 0 entonces salta al indicador para imprimir lo que se paso por el argumento ano
-je .isYear               ;Si viene con argumento -y salta al indicador .isYear
-mov eax, [esp+4]       	 ;Vuelvo a setear los parametros de la funcion para comparar si el parametro es -d
+je .esAno                ;Si viene con argumento -y salta al indicador .esAno
+mov eax, [esp + 4]       ;Vuelvo a setear los parametros de la funcion para comparar si el parametro es -d
 mov ebx, string_dos      
 mov ecx, 3
 mov edx, 3
 call _stringCompare
 cmp eax, 0               ;Si da 0 quiere decir que se paso el argumento por -d y deberia imprimir que se le paso el argumento por fecha
-je .isDate 				 ;Si viene con argumento -d salta al indicador .isDate
-jmp .halt 				 ;Salta a halt cuando termina
+je .esFecha 				     ;Si viene con argumento -d salta al indicador .esFecha
+jmp .halt 				       ;Salta a halt cuando termina
 
 ;.nulo imprime el ano actual, ya que no se le pasan parametros (unicamente calendar)
 .nulo:
@@ -172,32 +172,31 @@ mov eax, 4
 mov ebx, 1
 mov ecx, nulo
 mov edx, lenNulo
-int 0x80 				  ;Se hace el llamado al sistema (Linux)
+int 0x80 				      ;Se hace el llamado al sistema (Linux)
 call _saltoLinea 		  ;Llamo a la funcion para realizar un salto de linea
-mov eax, 78               ;Se llama la instruccion del sistema que trae una estructura con la zona horaria getTimeOfday
-mov ebx, timeStamp        ;Se mueve a ebx el timeval de la estructura del llamado al sistema
+mov eax, 78           ;Se llama la instruccion del sistema que trae una estructura con la zona horaria getTimeOfday
+mov ebx, timeStamp    ;Se mueve a ebx el timeval de la estructura del llamado al sistema
 mov ecx, timeZone
-int 0x80 				  ;Se hace el llamado al sistema (Linux)
-mov eax, [timeZone]       ;Muevo a eax el valor del timeZone
-cmp eax, 300 			  ;Comparo el valor del timeZone con 300 (timeZone de Colombia)
-jne .isNotCol   		  ;Salto al indicador .isNotCOl si no estoy en Colombia
+int 0x80 				      ;Se hace el llamado al sistema (Linux)
+mov eax, [timeZone]   ;Muevo a eax el valor del timeZone
+cmp eax, 300 			    ;Comparo el valor del timeZone con 300 (timeZone de Colombia)
+jne .noEsCol   		    ;Salto al indicador .noEsCol si no estoy en Colombia
 mov edx, 0
 mov eax, [timeStamp]
-call _saltoLinea 		  ;Llamo a la funcion para realizar un salto de linea
 
-mov ecx, 31556926   	  ;Esta es la cantidad de segundos que tiene un año
-div ecx 				  ;Divido para obtener la cantidad de anos desde 1970
-add eax, 1970 		  ;Suma la cantidad de la division anterior con 1970 para obtener el ano actual
-mov [years], eax      
-mov [year], eax
-call CalcCalendar 	  
-call holidaysOfYear 	  ;Llamo a la funcion para los Festivos de ano
-call printCalendar 	  ;Llamo a la funcion para imprimir el calendario
-jmp .halt 			  ;Salta a halt cuando termina
+mov ecx, 31556926   	;Esta es la cantidad de segundos que tiene un año
+div ecx 				      ;Divido para obtener la cantidad de anos desde 1970
+add eax, 1970 		    ;Suma la cantidad de la division anterior con 1970 para obtener el ano actual
+mov [anos], eax      
+mov [ano], eax
+call CalcularCalendario 	  
+call festivosDelAno 	      ;Llamo a la funcion para los calcular los Festivos del Ano
+call imprimirCalendario 	  ;Llamo a la funcion para imprimir el calendario
+jmp .halt 			            ;Salta a halt cuando termina
 
 
-;isYear imprime en pantalla el ano que se le paso como argumentos 
-.isYear: 
+;esAno imprime en pantalla el ano que se le paso como argumentos 
+.esAno: 
    ;pop eax
    ;pop eax
    ;pop ebx	
@@ -209,34 +208,34 @@ jmp .halt 			  ;Salta a halt cuando termina
 
    ;mov edx, [param]
    ;call _convStringToInt
-   ;mov [year], eax
-   ;call CalcCalendar
-   ;call holidaysOfYear
-   ;call printCalendar
+   ;mov [ano], eax
+   ;call CalcularCalendario
+   ;call festivosDelAno
+   ;call imprimirCalendario
    ;jmp .halt
-   print_Some isYear, lenIsYear
+   print_Some esAno, lenEsAno
    call _saltoLinea             
-   jmp .isCol
+   jmp .esCol
 
-;isDate imprime en pantalla la fecha que se le paso como argumentos
-.isDate:
-   print_Some isDate, lenIsDate
+;esFecha imprime en pantalla la fecha que se le paso como argumentos
+.esFecha:
+   print_Some esFecha, lenEsFecha
    call _saltoLinea           ;Llama la funcion del salto de linea
-   jmp .isCol
+   jmp .esCol
 
 ;Determina si la zona horaria es de colombia
-.isCol:
+.esCol:
    call _getTime              ;Llamo a la funcion para setear el timezone de mi laptop
    mov eax, [timeZone]        ;Muevo a eax el valor del timeZone
    cmp eax, 300               ;Comparo el valor del timeZone con 300 (timeZone de Colombia)
-   jne .isNotCol              ;Me interrumpe la ejecucion del programa si no estoy en colombia
+   jne .noEsCol               ;Me interrumpe la ejecucion del programa si no estoy en colombia
    mov eax, [timeZone] 
-   mov edi, digit
+   mov edi, digito
    call _intToString          ;Si estoy en colombia imprimo el entero
-   print_Some isCol, lenIsCol ;Imprimo el mensaje de: "Su timezone es: " 
-   print_Some digit, pInt     ;Imprimo el entero de la zona horaria
+   print_Some esCol, lenEsCol ;Imprimo el mensaje de: "Su timezone es: " 
+   print_Some digito, pInt    ;Imprimo el entero de la zona horaria
    call _saltoLinea           ;Llamo a la funcion para realizar un salto de linea
-   jmp .continue 			  ;Si ando en Colombia salto al indicador .continue para continuar
+   jmp .continue 			        ;Si ando en Colombia salto al indicador .continue para continuar
 
 ;continue continua con la ejecucion del calendario, pues estamos en Colombia
 .continue:
@@ -245,7 +244,7 @@ jmp .halt 			  ;Salta a halt cuando termina
    mov ecx, 31556926   		  ;La cantidad de segundos que tiene un año
    div ecx
    add eax, 1970
-   mov [years], eax
+   mov [anos], eax
    pop eax
    pop eax
    pop ebx
@@ -256,20 +255,20 @@ jmp .halt 			  ;Salta a halt cuando termina
    print_Some ln, lenLn
    mov edx, [param]
    call _convStringToInt 	 ;Llamo a la funcion para convertir el String que capture como param en entero
-   mov [year], eax
-   call CalcCalendar
-   call holidaysOfYear 		 ;Llamo a la funcion para los Festivos de ano
-   call printCalendar 		 ;Llamo a la funcion para imprimir el calendario
-   ;mov edi, digit
+   mov [ano], eax
+   call CalcularCalendario
+   call festivosDelAno 		 ;Llamo a la funcion para los calcular Festivos del Ano
+   call imprimirCalendario ;Llamo a la funcion para imprimir el calendario
+   ;mov edi, digito
    ;call _intToString
-   ;print_Some digit, pInt
+   ;print_Some digito, pInt
    mov eax, edx
    xor edx, edx
    mov ecx, 86400
    div ecx
-   mov [days], eax    		;EN EAX ESTAN LOS DIAS QUE PASARON DESDE EL 01 DE ENERO DEL ANO ACTUAL
-   mov esi, 0    			;Contador de mes
-   mov edi, eax  			;Contador para los dias
+   mov [dias], eax    	;EN EAX ESTAN LOS DIAS QUE PASARON DESDE EL 01 DE ENERO DEL ANO ACTUAL
+   mov esi, 0    			  ;Contador de mes
+   mov edi, eax  			  ;Contador para los dias
 
 ;dateLoop es un indicador que hace un ciclo para recorrer las fechas
 .dateLoop:
@@ -286,65 +285,65 @@ div ecx
 mov eax, edx
 
 cmp esi, 1 
-je .isFeb
+je .esFeb
 cmp eax, 0   ;Compara si es par tiene 31 dias el mes
-je .isPar    ;Si es par se le resta 31 dias
+je .esPar    ;Si es par se le resta 31 dias
    
-mov dword[daysLeftMonth], 30
+mov dword[diasFaltanMes], 30
 sub edi, 30  ;Se le restan 30 dias al contador para los dias
-jmp .isParEnd
+jmp .esParEnd
 
 ;esPar si el mes es de 31 dias
-.isPar:
-mov dword[daysLeftMonth], 31
+.esPar:
+mov dword[diasFaltanMes], 31
 sub edi, 31
-jmp .isParEnd
+jmp .esParEnd
 
 ;FebNormal le resta 28 dias al contador de dias
-.isFeb:
-mov eax, [years]
-call _isB
-mov eax, [isB]
+.esFeb:
+mov eax, [anos]
+call _esB
+mov eax, [esB]
 cmp eax, 1
-je .isFebB   ;Salta a Febrero bisiesto
+je .esFebB   ;Salta a Febrero bisiesto
 
-mov dword[daysLeftMonth], 28
+mov dword[diasFaltanMes], 28
 sub edi, 28
-jmp .isParEnd
+jmp .esParEnd
 
 ;FebB le resta 29 dias al contador de dias, ya que es bisiesto
-.isFebB: 
-mov dword[daysLeftMonth], 29
+.esFebB: 
+mov dword[diasFaltanMes], 29
 sub edi, 29
 
-.isParEnd:
+.esParEnd:
 add esi,1    ;Incremento el contador de meses
 
 ;Comparamos si la fecha es negativa, salimos del ciclo
 cmp edi, 0
-jge .dateLoop ;Si el contandor de dias que falta es mayor que 0 vuelve a hacer el loop
-add edi, [daysLeftMonth] ;Sumo dias que se restaron al ultimo mes
-mov [days], edi
-mov [months], esi
+jge .dateLoop            ;Si el contandor de dias que falta es mayor que 0 vuelve a hacer el loop
+add edi, [diasFaltanMes] ;Sumo dias que se restaron al ultimo mes
+mov [dias], edi
+mov [meses], esi
 
-;mov eax, [day]
-;mov edi, digit
+;mov eax, [dia]
+;mov edi, digito
 ;call _intToString
-;print_Some digit, pInt
+;print_Some digito, pInt
 ;call _saltoLinea
-;mov eax, [month]
-;mov edi, digit
+;mov eax, [mes]
+;mov edi, digito
 ;call _intToString
-;print_Some digit, pInt
+;print_Some digito, pInt
 ;call _saltoLinea
 jmp .halt    ;Salta a halt cuando termina
 
-;Nos dice si no esta en Colombia
-.isNotCol:
+;Nos dice si no estamos en Colombia
+.noEsCol:
 mov eax, 4
 mov ebx, 1
-mov ecx, notCol
-mov edx, lenNotCol
+mov ecx, noCol
+mov edx, lenNoCol
 int 0x80    ;Se hace el llamado al sistema (Linux)
 call _saltoLinea
 jmp .halt   ;Salta a halt cuando termina
@@ -418,7 +417,7 @@ _intToString:
     mov   ebp, esp
     mov   ecx, 10
     mov   edx, 0
-    mov [digit], edx
+    mov [digito], edx
     ;push 0x0a  ;End of line \n
 
  .pushDigits:
@@ -444,15 +443,15 @@ _intToString:
     sub eax, edi        ;Return number of bytes written
     ret
 
-write_digit:
-    push eax
-    push ebx
+write_digito:
+  push eax
+  push ebx
 	push ecx
 	push edx
-	mov eax, 4       	;System call, 4 = sys_write
-	mov ebx, 1         	;File descriptor 1 = stdout
-	mov ecx, digit      ;Store *address* of digit into ecx
-	mov edx, 16         ;Byte size of 16
+	mov eax, 4       	   ;System call, 4 = sys_write
+	mov ebx, 1         	 ;File descriptor 1 = stdout
+	mov ecx, digito      ;Store *address* of digit into ecx
+	mov edx, 16          ;Byte size of 16
 	int 80h
 	pop edx
 	pop ecx
@@ -557,9 +556,9 @@ dow:
 	ret
 
 ; Calcula si el año es bisiesto
-_isB:
+_esB:
 mov edx, 0
-mov eax, [years]
+mov eax, [anos]
 mov ecx, 4
 div ecx
 cmp edx, 0  	;Comparo si el año es divisible por 4
@@ -567,7 +566,7 @@ je .stepTwo
 jmp .stepFive
 
 .stepTwo:
-mov eax, [years]
+mov eax, [anos]
 mov edx, 0
 mov ecx, 100
 div ecx
@@ -576,7 +575,7 @@ je .stepThree
 jmp .stepFour
 
 .stepThree:
-mov eax, [years]
+mov eax, [anos]
 mov edx, 0
 mov ecx, 400
 div ecx
@@ -586,25 +585,24 @@ jmp .stepFive
 
 ;El año es bisiesto y tiene 366 dias
 .stepFour:
-mov dword[isB], 1  		;1 Si es bisiesto
+mov dword[esB], 1  		;1 Si es bisiesto
 
 .stepFive:
-mov dword[isB], 0  		;0 Si no es bisiesto
+mov dword[esB], 0  		;0 Si No es bisiesto
 
 ret
 
-CalcCalendar:
-	;year = []
-  	;year << nil
+CalcularCalendario:
+	;ano = []
+  ;ano << nil
 	mov eax, 1
-	mov [index], eax
-	mov eax, [year]
+	mov [indice], eax
+	mov eax, [ano]
 	mov ebx, 1
 	mov ecx, 1
 
 	call dow
-	mov [dayofweek], edx
-
+	mov [diaDeLaSemana], edx
 	mov ecx, 0
 	mov [i], ecx
 	.fori:
@@ -647,18 +645,18 @@ CalcCalendar:
 	jmp .else
 
 	.entry:
-	mov ebx, [index]
+	mov ebx, [indice]
 	;mov al, 5
-	mov al, [dayofweek]
+	mov al, [diaDeLaSemana]
 	mov [array+ebx], al
 	inc ebx
-	mov [index], ebx
-	mov eax, [dayofweek]
+	mov [indice], ebx
+	mov eax, [diaDeLaSemana]
 	add eax, 1
 	mov ecx, 7
 	xor edx, edx
 	div ecx
-	mov [dayofweek], edx
+	mov [diaDeLaSemana], edx
 
 	jmp .otherIf
 
@@ -669,27 +667,27 @@ CalcCalendar:
 	mov eax, [j]
 	cmp eax, 28
 	jg .exitIf2
-	mov ebx, [index]
-	mov al, [dayofweek]
+	mov ebx, [indice]
+	mov al, [diaDeLaSemana]
 	mov [array+ebx], al
 	inc ebx
-	mov [index], ebx
-	mov eax, [dayofweek]
+	mov [indice], ebx
+	mov eax, [diaDeLaSemana]
 	add eax, 1
 	mov ecx, 7
 	xor edx, edx
 	div ecx
-	mov [dayofweek], edx
+	mov [diaDeLaSemana], edx
 
 	.exitIf2:
-	mov eax, [year]
+	mov eax, [ano]
 	mov ecx, 4
 	xor edx, edx
 	div ecx
 	mov eax, edx
 	cmp eax, 0
 	jnz .else2
-	mov eax, [year]
+	mov eax, [ano]
 	mov ecx, 100
 	xor edx, edx
 	div ecx
@@ -699,7 +697,7 @@ CalcCalendar:
 	jmp .entry2
 
 	.otherWay:
-	mov eax, [year]
+	mov eax, [ano]
 	mov ecx, 400
 	xor edx, edx
 	div ecx
@@ -711,17 +709,17 @@ CalcCalendar:
 	mov eax, [j]
 	cmp eax, 29
 	jnz .exitIf3
-	mov ebx, [index]
-	mov al, [dayofweek]
+	mov ebx, [indice]
+	mov al, [diaDeLaSemana]
 	mov [array+ebx], al
 	inc ebx
-	mov [index], ebx
-	mov eax, [dayofweek]
+	mov [indice], ebx
+	mov eax, [diaDeLaSemana]
 	add eax, 1
 	mov ecx, 7
 	xor edx, edx
 	div ecx
-	mov [dayofweek], edx
+	mov [diaDeLaSemana], edx
 
 	.exitIf3:
 	mov eax, [j]
@@ -732,9 +730,9 @@ CalcCalendar:
 	jnz .exitElse2
 
 	.entry3:
-	mov eax, [index]
+	mov eax, [indice]
 	inc eax
-	mov [index], eax
+	mov [indice], eax
 	jmp .exitElse2
 
 	.else2:
@@ -749,9 +747,9 @@ CalcCalendar:
 	jnz .exitElse2
 
 	.entry4:
-	mov eax, [index]
+	mov eax, [indice]
 	inc eax
-	mov [index], eax
+	mov [indice], eax
 
 	.exitElse2:
 
@@ -776,23 +774,23 @@ CalcCalendar:
 	mov eax, [j]
 	cmp eax, 30
 	jg .else3
-	mov ebx, [index]
-	mov al, [dayofweek]
+	mov ebx, [indice]
+	mov al, [diaDeLaSemana]
 	mov [array+ebx], al
 	inc ebx
-	mov [index], ebx
-	mov eax, [dayofweek]
+	mov [indice], ebx
+	mov eax, [diaDeLaSemana]
 	add eax, 1
 	mov ecx, 7
 	xor edx, edx
 	div ecx
-	mov [dayofweek], edx
+	mov [diaDeLaSemana], edx
 	jmp .exitIf4
 
 	.else3:
-	mov ebx, [index]
+	mov ebx, [indice]
 	inc ebx
-	mov [index], ebx
+	mov [indice], ebx
 
 	.exitIf4:
 	jmp .forj
@@ -805,22 +803,22 @@ CalcCalendar:
 
 printArray:
 	mov ebx, 0
-	mov [index], ebx
+	mov [indice], ebx
 	.for:
-	mov ebx, [index]
+	mov ebx, [indice]
 	cmp ebx, lenArray
 	jge .exitFor
 	movzx eax, byte[array+ebx]
-	mov edi, digit
+	mov edi, digito
 	call _intToString
-	call write_digit
+	call write_digito
 	inc ebx
-	mov [index], ebx
+	mov [indice], ebx
 	jmp .for
 	.exitFor:
 	ret
 
-holidaysOfYear:
+festivosDelAno:
 ;Festivos inamovibles
 ;1 de Enero - Ano Nuevo
 ;Jueves Santo
@@ -892,17 +890,17 @@ mov [array+ebx], al
 ;y[11*31 + 25] *= -1
 
 ;Festivos cobijados por la ley
-;6 de Enero - Epifania del Senor
-;19 de Marzo - Dia de San Jose
-;Ascension del Senor (Sexto Domingo despues de Pascua)
-;Corpus Christi (Octavo Domingo despues de Pascua)
-;Sagrado Corazon de Jesus (Noveno Domingo despues de Pascua)
-;!!jueves y viernes santo (semana anterior a pascua)
-;29 de Junio - San Pedro y San Pablo
-;15 de Agosto - Asuncion de la Virgen
-;12 de Octubre - Dia de la Raza
-;1 de Noviembre - Todos los Santos
-;11 de Noviembre - Independencia de Cartagena
+;;6 de Enero - Epifania del Senor
+;;19 de Marzo - Dia de San Jose
+;;Ascension del Senor (Sexto Domingo despues de Pascua)
+;;Corpus Christi (Octavo Domingo despues de Pascua)
+;;Sagrado Corazon de Jesus (Noveno Domingo despues de Pascua)
+;;!!jueves y viernes santo (semana anterior a pascua)
+;;29 de Junio - San Pedro y San Pablo
+;;15 de Agosto - Asuncion de la Virgen
+;;12 de Octubre - Dia de la Raza
+;;1 de Noviembre - Todos los Santos
+;;11 de Noviembre - Independencia de Cartagena
 
 ;;6 de Enero
 mov eax, 8
@@ -1032,19 +1030,19 @@ mov [array+ebx], al
 
 ;;Calculo del Domingo de Pascua
 ;a = ano % 19
-mov eax, [year]
+mov eax, [ano]
 mov ebx, 19
 xor edx, edx
 div ebx
 mov [a], edx
 ;b = ano / 100
-mov eax, [year]
+mov eax, [ano]
 mov ebx, 100
 xor edx, edx
 div ebx
 mov [b], eax
 ;c = ano % 100
-mov eax, [year]
+mov eax, [ano]
 mov ebx, 100
 xor edx, edx
 div ebx
@@ -1140,31 +1138,31 @@ add eax, [l]
 sub eax, ecx
 add eax, 144
 mov [n], eax
-;monthOfEaster = n / 31
+;mesDePascua = n / 31
 mov eax, [n]
 mov ebx, 31
 xor edx, edx
 div ebx
 dec eax
-mov [monthOfEaster], eax
-;dayOfEaster = 1 + (n % 31)
+mov [mesDePascua], eax
+;diaDePascua = 1 + (n % 31)
 mov eax, [n]
 mov ebx, 31
 xor edx, edx
 div ebx
 mov eax, edx
 add eax, 2
-mov [dayOfEaster], eax
-;monthOfEaster -= 1
-;dayOfEaster += 1
+mov [diaDePascua], eax
+;mesDePascua -= 1
+;diaDePascua += 1
 
-;y[(monthOfEaster - 1)*31 + dayOfEaster - 2] *= -1 ;viernes santo
-mov eax, [monthOfEaster]
+;y[(mesDePascua - 1)*31 + diaDePascua - 2] *= -1 ;viernes santo
+mov eax, [mesDePascua]
 dec eax
 mov ebx, 31
 mul ebx
 mov ecx, eax
-mov eax, [dayOfEaster]
+mov eax, [diaDePascua]
 sub eax, 2
 add eax, ecx
 mov ebx, eax
@@ -1174,13 +1172,13 @@ add eax, ecx
 mov [res], eax
 mov al, [res]
 mov [array+ebx], al
-;y[(monthOfEaster - 1)*31 + dayOfEaster - 3] *= -1 ; jueves santo
-mov eax, [monthOfEaster]
+;y[(mesDePascua - 1)*31 + diaDePascua - 3] *= -1 ; jueves santo
+mov eax, [mesDePascua]
 dec eax
 mov ebx, 31
 mul ebx
 mov ecx, eax
-mov eax, [dayOfEaster]
+mov eax, [diaDePascua]
 sub eax, 3
 add eax, ecx
 mov ebx, eax
@@ -1192,15 +1190,15 @@ mov al, [res]
 mov [array+ebx], al
 
 ;;Dia de la ascencion
-mov eax, [monthOfEaster]
+mov eax, [mesDePascua]
 dec eax
 mov ebx, 31
 mul ebx
 mov ecx, eax
-mov eax, [dayOfEaster]
+mov eax, [diaDePascua]
 add eax, 42
 add eax, ecx
-mov [index], eax
+mov [indice], eax
 movzx eax, byte[array+eax]
 mov ebx, 7
 sub ebx, eax
@@ -1210,25 +1208,25 @@ mov ecx, 7
 xor edx, edx
 div ecx
 mov ebx, edx
-add ebx, [index]
+add ebx, [indice]
 movzx eax, byte[array+ebx]
 mov ecx, 10
 add eax, ecx
 mov [res], eax
 mov al, [res]
 mov [array+ebx], al
-;y[((7 - y[(monthOfEaster - 1)*31 + dayOfEaster + 42] + 1) % 7) + ((monthOfEaster - 1)*31 + dayOfEaster + 42)] *= -1
+;y[((7 - y[(mesDePascua - 1)*31 + diaDePascua + 42] + 1) % 7) + ((mesDePascua - 1)*31 + diaDePascua + 42)] *= -1
 
 ;;Corpus Christi
-mov eax, [monthOfEaster]
+mov eax, [mesDePascua]
 dec eax
 mov ebx, 31
 mul ebx
 mov ecx, eax
-mov eax, [dayOfEaster]
+mov eax, [diaDePascua]
 add eax, 63
 add eax, ecx
-mov [index], eax
+mov [indice], eax
 movzx eax, byte[array+eax]
 mov ebx, 7
 sub ebx, eax
@@ -1238,25 +1236,25 @@ mov ecx, 7
 xor edx, edx
 div ecx
 mov ebx, edx
-add ebx, [index]
+add ebx, [indice]
 movzx eax, byte[array+ebx]
 mov ecx, 10
 add eax, ecx
 mov [res], eax
 mov al, [res]
 mov [array+ebx], al
-;y[((7 - y[(monthOfEaster - 1)*31 + dayOfEaster + 63] + 1) % 7) + ((monthOfEaster - 1)*31 + dayOfEaster + 63)] *= -1
+;y[((7 - y[(mesDePascua - 1)*31 + diaDePascua + 63] + 1) % 7) + ((mesDePascua - 1)*31 + diaDePascua + 63)] *= -1
 
 ;;Sagrado Corazon
-mov eax, [monthOfEaster]
+mov eax, [mesDePascua]
 dec eax
 mov ebx, 31
 mul ebx
 mov ecx, eax
-mov eax, [dayOfEaster]
+mov eax, [diaDePascua]
 add eax, 70
 add eax, ecx
-mov [index], eax
+mov [indice], eax
 movzx eax, byte[array+eax]
 mov ebx, 7
 sub ebx, eax
@@ -1266,91 +1264,91 @@ mov ecx, 7
 xor edx, edx
 div ecx
 mov ebx, edx
-add ebx, [index]
+add ebx, [indice]
 movzx eax, byte[array+ebx]
 mov ecx, 10
 add eax, ecx
 mov [res], eax
 mov al, [res]
 mov [array+ebx], al
-;y[((7 - y[(monthOfEaster - 1)*31 + dayOfEaster + 70] + 1) % 7) + ((monthOfEaster - 1)*31 + dayOfEaster + 70)] *= -1
+;y[((7 - y[(mesDePascua - 1)*31 + diaDePascua + 70] + 1) % 7) + ((mesDePascua - 1)*31 + diaDePascua + 70)] *= -1
 
 ret
 
-printCalendar:
+imprimirCalendario:
 	mov eax, 0
-	mov [dayofweek], eax
-	;ResetRow
+	mov [diaDeLaSemana], eax
+	;ReajustarFila
 	mov ebx, 0
-	mov [index], ebx
+	mov [indice], ebx
 	mov ecx, 0
 	mov [i], ecx
-	.forMonths:
+	.paraMeses:
 	mov ecx, [i]
 	inc ecx
 	mov [i], ecx
 	cmp ecx, 12
-	jg .exitForMonths
+	jg .exitParaMeses
 	cmp ecx, 1
-	jnz .next1
+	jnz .proximo1
 	print_Some enero, lenEnero
-	jmp .format
-	.next1:
+	jmp .formato
+	.proximo1:
 	cmp ecx, 2
-	jnz .next2
+	jnz .proximo2
 	print_Some febrero, lenFebrero
-	jmp .format
-	.next2:
+	jmp .formato
+	.proximo2:
 	cmp ecx, 3
-	jnz .next3
+	jnz .proximo3
 	print_Some marzo, lenMarzo
-	jmp .format
-	.next3:
+	jmp .formato
+	.proximo3:
 	cmp ecx, 4
-	jnz .next4
+	jnz .proximo4
 	print_Some abril, lenAbril
-	jmp .format
-	.next4:
+	jmp .formato
+	.proximo4:
 	cmp ecx, 5
-	jnz .next5
+	jnz .proximo5
 	print_Some mayo, lenMayo
-	jmp .format
-	.next5:
+	jmp .formato
+	.proximo5:
 	cmp ecx, 6
-	jnz .next6
+	jnz .proximo6
 	print_Some junio, lenJunio
-	jmp .format
-	.next6:
+	jmp .formato
+	.proximo6:
 	cmp ecx, 7
-	jnz .next7
+	jnz .proximo7
 	print_Some julio, lenJulio
-	jmp .format
-	.next7:
+	jmp .formato
+	.proximo7:
 	cmp ecx, 8
-	jnz .next8
+	jnz .proximo8
 	print_Some agosto, lenAgosto
-	jmp .format
-	.next8:
+	jmp .formato
+	.proximo8:
 	cmp ecx, 9
-	jnz .next9
+	jnz .proximo9
 	print_Some septiembre, lenSeptiembre
-	jmp .format
-	.next9:
+	jmp .formato
+	.proximo9:
 	cmp ecx, 10
-	jnz .next10
+	jnz .proximo10
 	print_Some octubre, lenOctubre
-	jmp .format
-	.next10:
+	jmp .formato
+	.proximo10:
 	cmp ecx, 11
-	jnz .next11
+	jnz .proximo11
 	print_Some noviembre, lenNoviembre
-	jmp .format
-	.next11:
+	jmp .formato
+	.proximo11:
 	cmp ecx, 12
-	jnz .forMonths
+	jnz .paraMeses
 	print_Some diciembre, lenDiciembre
 
-	.format:
+	.formato:
 	print_Some cabecera, lenCabecera
 	mov ebx, 1
 	mov [j], ebx
@@ -1374,66 +1372,66 @@ printCalendar:
 	xor edx, edx
 	div ecx
 	mov eax, edx
-	cmp eax, [dayofweek]
+	cmp eax, [diaDeLaSemana]
 	jnz .elseNoFestivo
 	mov ebx, [res]
 	movzx eax, byte[array+ebx]
 	cmp eax, 0
-	jz .isFestivo
+	jz .esFestivo
 	mov ebx, [res]
 	movzx eax, byte[array+ebx]
 	cmp eax, 10
-	jb .isNormal
+	jb .esNormal
 
-	.isFestivo:
-	print_Some fChar, lenFChar
+	.esFestivo:
+	print_Some caracterF, lenCaracterF
 	mov eax, [j]
-	mov [last], eax
+	mov [ultimo], eax
 	cmp eax, 10
 	jb .addEspacioFestivo
-	mov edi, digit
+	mov edi, digito
 	call _intToString
-	call write_digit
+	call write_digito
 	print_Some espacioSimple, lenEspacioS
-	.contine2:
-	mov ebx, [index]
+	.continue2:
+	mov ebx, [indice]
 	inc ebx
-	mov [index], ebx
+	mov [indice], ebx
 	jmp .continue
 
 	.addEspacioFestivo:
 	mov eax, [j]
-	mov edi, digit
+	mov edi, digito
 	call _intToString
-	call write_digit
+	call write_digito
 	print_Some espacioDoble, lenEspacioD
-	jmp .contine2
+	jmp .continue2
 
-	.isNormal:
+	.esNormal:
 	mov ebx, [res]
 	movzx eax, byte[array+ebx]
 	cmp eax, 0
 	jbe .continue
 	mov eax, [j]
-	mov [last], eax
+	mov [ultimo], eax
 	cmp eax, 10
 	jb .addEspacioNormal
-	mov edi, digit
+	mov edi, digito
 	call _intToString
-	call write_digit
+	call write_digito
 	print_Some espacioTriple, lenEspacioT
 	.continue3:
-	mov ebx, [index]
+	mov ebx, [indice]
 	inc ebx
-	mov [index], ebx
+	mov [indice], ebx
 
 	.continue:
-	mov eax, [dayofweek]
+	mov eax, [diaDeLaSemana]
 	inc eax
 	mov ecx, 7
 	xor edx, edx
 	div ecx
-	mov [dayofweek], edx
+	mov [diaDeLaSemana], edx
 	mov ebx, [j]
 	inc ebx
 	mov [j], ebx
@@ -1441,31 +1439,31 @@ printCalendar:
 
 	.addEspacioNormal:
 	mov eax, [j]
-	mov edi, digit
+	mov edi, digito
 	call _intToString
-	call write_digit
+	call write_digito
 	print_Some espacioCuad, lenEspacioC
 	jmp .continue3
 
 	.elseNoFestivo:
 	print_Some espacioNulo, lenEspacioN
 	mov eax, -1
-	mov [last], eax
-	mov ebx, [index]
+	mov [ultimo], eax
+	mov ebx, [indice]
 	inc ebx
-	mov [index], ebx
-	mov eax, [dayofweek]
+	mov [indice], ebx
+	mov eax, [diaDeLaSemana]
 	inc eax
 	mov ecx, 7
 	xor edx, edx
 	div ecx
-	mov [dayofweek], edx
+	mov [diaDeLaSemana], edx
 
 	.nuevaFila:
-	mov eax, [index]
+	mov eax, [indice]
 	cmp eax, 7
 	jz .nuevaLinea
-	mov ebx, [last]
+	mov ebx, [ultimo]
 	cmp ebx, 31
 	jz .nuevaLinea
 	;row[row.count - 1] == 31
@@ -1474,15 +1472,15 @@ printCalendar:
 	.nuevaLinea:
 	print_Some ln, lenLn
 	mov ebx, 0
-	mov [dayofweek], ebx
-	mov [index], ebx
+	mov [diaDeLaSemana], ebx
+	mov [indice], ebx
 	jmp .exitElseNull
 
 	.elseNull:
 	print_Some ln, lenLn
 	mov ebx, 0
-	mov [dayofweek], ebx
-	mov [index], ebx
+	mov [diaDeLaSemana], ebx
+	mov [indice], ebx
 	mov ecx, 32
 	mov [j], ecx
 
@@ -1493,10 +1491,10 @@ printCalendar:
 	print_Some ln, lenLn
 	print_Some ln, lenLn
 	mov ebx, 0
-	mov [index], ebx
-	jmp .forMonths
+	mov [indice], ebx
+	jmp .paraMeses
 
-	.exitForMonths:
+	.exitParaMeses:
 	ret
 
 Error:
