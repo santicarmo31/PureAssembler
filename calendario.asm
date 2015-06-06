@@ -197,22 +197,6 @@ jmp .halt 			            ;Salta a halt cuando termina
 
 ;esAno imprime en pantalla el ano que se le paso como argumentos 
 .esAno: 
-   ;pop eax
-   ;pop eax
-   ;pop ebx	
-   ;mov [param], ebx
-   ;mov edi, ebx
-   ;call Length
-   ;print_Some ebx, ecx
-   ;print_Some ln, lenLn
-
-   ;mov edx, [param]
-   ;call _convStringToInt
-   ;mov [ano], eax
-   ;call CalcularCalendario
-   ;call festivosDelAno
-   ;call imprimirCalendario
-   ;jmp .halt
    print_Some esAno, lenEsAno
    call _saltoLinea             
    jmp .esCol
@@ -259,9 +243,6 @@ jmp .halt 			            ;Salta a halt cuando termina
    call CalcularCalendario
    call festivosDelAno 		 ;Llamo a la funcion para los calcular Festivos del Ano
    call imprimirCalendario ;Llamo a la funcion para imprimir el calendario
-   ;mov edi, digito
-   ;call _intToString
-   ;print_Some digito, pInt
    mov eax, edx
    xor edx, edx
    mov ecx, 86400
@@ -326,16 +307,6 @@ add edi, [diasFaltanMes] ;Sumo dias que se restaron al ultimo mes
 mov [dias], edi
 mov [meses], esi
 
-;mov eax, [dia]
-;mov edi, digito
-;call _intToString
-;print_Some digito, pInt
-;call _saltoLinea
-;mov eax, [mes]
-;mov edi, digito
-;call _intToString
-;print_Some digito, pInt
-;call _saltoLinea
 jmp .halt    ;Salta a halt cuando termina
 
 ;Nos dice si no estamos en Colombia
@@ -353,15 +324,6 @@ jmp .halt   ;Salta a halt cuando termina
 mov eax, 1
 mov ebx, 0
 int 0x80
-
-;_miFuncion:
-;   _reiniciarContador:
-;     mov ecx, -1
-
-;   _buscarLongitud:
-;     inc ecx
-;     cmp byte[eax + ecx],0
-;     jne _buscarLongitud
      
 ;Compara dos Strings haciendo uso de los llamados ESI:EDI del 
 ;procesador que permiten la operacion con strings en memoria
@@ -801,7 +763,7 @@ CalcularCalendario:
 	.exitFori:
 	ret
 
-printArray:
+imprimirArreglo:
 	mov ebx, 0
 	mov [indice], ebx
 	.for:
@@ -819,90 +781,17 @@ printArray:
 	ret
 
 festivosDelAno:
-;Festivos inamovibles
-;1 de Enero - Ano Nuevo
-;Jueves Santo
-;Viernes Santo
-;1 de Mayo - Dia del Trabajo
-;20 de Julio - Independencia Nacional 
-;7 de Agosto - Batalla de Boyaca
-;8 de Diciembre - Inmaculada Concepcion 
-;25 de Diciembre - Navidad
 
-;1 de Enero
-mov ebx, 1       ;1
+;1 de Enero año nuevo
+mov ebx, 1       ;Posición del arreglo
 movzx eax, byte[array+ebx]
 mov ecx, 10
 add eax, ecx
 mov [res], eax
 mov al, [res]
 mov [array+ebx], al
-;y[1] *= -1
 
-;1 de Mayo
-mov ebx, 125     ;4*31+1
-movzx eax, byte[array+ebx]
-mov ecx, 10
-add eax, ecx
-mov [res], eax
-mov al, [res]
-mov [array+ebx], al
-;y[4*31 + 1] *= -1
-
-;20 de Julio
-mov ebx, 206     ;6*31+20
-movzx eax, byte[array+ebx]
-mov ecx, 10
-add eax, ecx
-mov [res], eax
-mov al, [res]
-mov [array+ebx], al
-;y[6*31 + 20] *= -1
-
-;7 de Agosto
-mov ebx, 224     ;7*31+7
-movzx eax, byte[array+ebx]
-mov ecx, 10
-add eax, ecx
-mov [res], eax
-mov al, [res]
-mov [array+ebx], al
-;y[7*31 + 7] *= -1
-
-;8 de Diciembre
-mov ebx, 349     ;11*31+8
-movzx eax, byte[array+ebx]
-mov ecx, 10
-add eax, ecx
-mov [res], eax
-mov al, [res]
-mov [array+ebx], al
-;y[11*31 + 8] *= -1
-
-;25 de Diciembre
-mov ebx, 366     ;11*31+25
-movzx eax, byte[array+ebx]
-mov ecx, 10
-add eax, ecx
-mov [res], eax
-mov al, [res]
-mov [array+ebx], al
-;y[11*31 + 25] *= -1
-
-;Festivos cobijados por la ley
-;;6 de Enero - Epifania del Senor
-;;19 de Marzo - Dia de San Jose
-;;Ascension del Senor (Sexto Domingo despues de Pascua)
-;;Corpus Christi (Octavo Domingo despues de Pascua)
-;;Sagrado Corazon de Jesus (Noveno Domingo despues de Pascua)
-;;!!jueves y viernes santo (semana anterior a pascua)
-;;29 de Junio - San Pedro y San Pablo
-;;15 de Agosto - Asuncion de la Virgen
-;;12 de Octubre - Dia de la Raza
-;;1 de Noviembre - Todos los Santos
-;;11 de Noviembre - Independencia de Cartagena
-
-;;6 de Enero
+;6 de Enero epifania del señor
 mov eax, 8
 movzx ebx, byte[array+6]
 sub eax, ebx
@@ -920,7 +809,7 @@ mov al, [res]
 mov [array+ebx], al
 ;y[((7 - y[6] + 1) % 7) + (6)] *= -1
 
-;;19 de Marzo
+;19 de Marzo dia de San jose
 mov eax, 8
 movzx ebx, byte[array+81]
 sub eax, ebx
@@ -938,7 +827,17 @@ mov al, [res]
 mov [array+ebx], al
 ;y[((7 - y[2*31 + 19] + 1) % 7) + (2*31 + 19)] *= -1
 
-;;29 de Junio
+;1 de Mayo día del trabajo
+mov ebx, 125     ;4*31+1
+movzx eax, byte[array+ebx]
+mov ecx, 10
+add eax, ecx
+mov [res], eax
+mov al, [res]
+mov [array+ebx], al
+;y[4*31 + 1] *= -1
+
+;29 de Junio dia San Pedro y San Pablo
 mov eax, 9
 movzx ebx, byte[array+184]
 sub eax, ebx
@@ -956,7 +855,27 @@ mov al, [res]
 mov [array+ebx], al
 ;y[((7 - y[5*31 + 29] + 1) % 7) + (5*31 + 29)] *= -1
 
-;;15 de Agosto
+;20 de Julio Día de independencia del país
+mov ebx, 206     ;6*31+20
+movzx eax, byte[array+ebx]
+mov ecx, 10
+add eax, ecx
+mov [res], eax
+mov al, [res]
+mov [array+ebx], al
+;y[6*31 + 20] *= -1
+
+;7 de Agosto Día de batalla de Boyaca
+mov ebx, 224     ;7*31+7
+movzx eax, byte[array+ebx]
+mov ecx, 10
+add eax, ecx
+mov [res], eax
+mov al, [res]
+mov [array+ebx], al
+;y[7*31 + 7] *= -1
+
+;15 de Agosto Asuncion de la Virgen
 mov eax, 8
 movzx ebx, byte[array+232]
 sub eax, ebx
@@ -974,7 +893,7 @@ mov al, [res]
 mov [array+ebx], al
 ;y[((7 - y[7*31 + 15] + 1) % 7) + (7*31 + 15)] *= -1
 
-;;12 de Octubre
+;12 de Octubre Día de la raza
 mov eax, 8
 movzx ebx, byte[array+291]
 sub eax, ebx
@@ -992,7 +911,7 @@ mov al, [res]
 mov [array+ebx], al
 ;y[((7 - y[9*31 + 12] + 1) % 7) + (9*31 + 12)] *= -1
 
-;;1 de Noviembre
+;1 de Noviembre Día de todos los santos
 mov eax, 8
 movzx ebx, byte[array+311]
 sub eax, ebx
@@ -1010,7 +929,7 @@ mov al, [res]
 mov [array+ebx], al
 ;y[((7 - y[10*31 + 1] + 1) % 7) + (10*31 + 1)] *= -1
 
-;;11 de Noviembre
+;11 de Noviembre Independencia de cartagena
 mov eax, 8
 movzx ebx, byte[array+321]
 sub eax, ebx
@@ -1028,7 +947,28 @@ mov al, [res]
 mov [array+ebx], al
 ;y[((7 - y[10*31 + 11] + 1) % 7) + (10*31 + 11)] *= -1
 
-;;Calculo del Domingo de Pascua
+;8 de Diciembre Día de la inmaculada concepción
+mov ebx, 349     ;11*31+8
+movzx eax, byte[array+ebx]
+mov ecx, 10
+add eax, ecx
+mov [res], eax
+mov al, [res]
+mov [array+ebx], al
+;y[11*31 + 8] *= -1
+
+;25 de Diciembre Navidad 
+mov ebx, 366     ;11*31+25
+movzx eax, byte[array+ebx]
+mov ecx, 10
+add eax, ecx
+mov [res], eax
+mov al, [res]
+mov [array+ebx], al
+;y[11*31 + 25] *= -1
+
+
+;Domingo de Pascua
 ;a = ano % 19
 mov eax, [ano]
 mov ebx, 19
@@ -1189,7 +1129,7 @@ mov [res], eax
 mov al, [res]
 mov [array+ebx], al
 
-;;Dia de la ascencion
+;Áscension de señor
 mov eax, [mesDePascua]
 dec eax
 mov ebx, 31
@@ -1217,7 +1157,7 @@ mov al, [res]
 mov [array+ebx], al
 ;y[((7 - y[(mesDePascua - 1)*31 + diaDePascua + 42] + 1) % 7) + ((mesDePascua - 1)*31 + diaDePascua + 42)] *= -1
 
-;;Corpus Christi
+;Corpus christi
 mov eax, [mesDePascua]
 dec eax
 mov ebx, 31
@@ -1245,7 +1185,7 @@ mov al, [res]
 mov [array+ebx], al
 ;y[((7 - y[(mesDePascua - 1)*31 + diaDePascua + 63] + 1) % 7) + ((mesDePascua - 1)*31 + diaDePascua + 63)] *= -1
 
-;;Sagrado Corazon
+;Sagrado corazón
 mov eax, [mesDePascua]
 dec eax
 mov ebx, 31
